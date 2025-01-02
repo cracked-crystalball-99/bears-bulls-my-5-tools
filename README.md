@@ -1,7 +1,10 @@
 # 0. bears-bulls-my-5-tools
 
-I have created a web app tool for simplifying traditional technial analysis.
-The web app simplifies or reduces each tool to a pair of percentages.
+I have created a web app tool for simplifying typical technical analysis. Typically,
+traders technical trading choices by relying on visual charts and lines. 
+
+In comparsion, the web app simplifies or reduces each tool to a pair of percentages. 
+No lines or charts required. 
 
 After processing your closing price data for cryptos or stocks,
 the web app presents percentages in the last table: Votes Innovative Percentages (VIP %).
