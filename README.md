@@ -35,6 +35,12 @@ getSymbols("<your code>",src="yahoo",from="2024-08-01",to="2024-12-20")
 After you have the variable in the RStudio in global environment, 
 write R code to convert and save to a csv file (desktop needed). 
 
+Open in a spreadsheet app like Google Sheets or MS Excel. Format the csv file
+so that headings exactly as follows: Date, Open, High, Low, Close, Adj Close, Volume.
+You may need to switch the data for Adj Close and Volume. 
+
+This simple yet exact formatting enables you to upload to the web app. 
+
 # 3. Back to the web app. 
 
 The pair of percentages, in the final table, represent cumulative calculations, indicating an opinion.
