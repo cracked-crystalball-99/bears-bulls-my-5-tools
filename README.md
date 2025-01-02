@@ -12,9 +12,13 @@ That amount gives the algorithms more to work with. You can use the sample
 data to get started. Look for csv files, titled: AMZN (Amazon), GME (GameStop Corp.),
 BHP.AX (BHP Group Limited). 
 
-Alternatively, or in addition to, you may well obtain closing price data 
+Richer experience via desktop computer use. Please consider next few paragraphs, as to
+getting new data. 
+
+Alternatively, or in addition to those sample files, you may well obtain new csv files of closing price data 
 via RStudio, and the R language. Here follows a
-sample snippet of implementation code for the R language:
+some implementation code for the R language for getting closing price data, 
+aiming toward csv file format:
 
 # 1. Load R packages 
 library("TTR")
@@ -28,8 +32,18 @@ library("writexl")
 # 2.1.Yahoo Finance
 getSymbols("<your code>",src="yahoo",from="2024-08-01",to="2024-12-20")
 
-The percentages represent cumulative calculations, indicating an opinion.
-The left-side, coded in green, shows the buy or yes vote percentage. 
+After you have the variable in the RStudio in global environment, 
+write R code to convert and save to a csv file (desktop needed). 
+
+Back to the web app. 
+
+The pair of percentages, in the final table, represent cumulative calculations, indicating an opinion.
+At the very-bottom of the table, the VIP % row, that row shows final outputs for the web app. 
+
+The left-side cell, coded in green, shows the buy or yes vote percentage. 
+
 On the right-side, coded in red, shows the sell or no vote percentage.
 
 You interpret the percentages as to persuasiveness. 
+
+The graph is just a visual representation of the percentages. Best wishes. 
