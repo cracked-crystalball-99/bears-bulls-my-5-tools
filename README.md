@@ -1,4 +1,4 @@
-# 0 bears-bulls-my-5-tools
+# 0. bears-bulls-my-5-tools
 
 I have created a web app tool for simplifying traditional technial analysis.
 The web app simplifies or reduces each tool to a pair of percentages.
