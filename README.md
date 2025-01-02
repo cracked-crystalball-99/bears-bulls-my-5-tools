@@ -5,7 +5,7 @@ The web app simplifies or reduces each tool to a pair of percentages.
 
 After processing your closing price data for cryptos or stocks,
 the web app presents percentages in the last table: Votes Innovative Percentages (VIP %).
-For each of the up to 5 tools, you find there a pair of percentages.
+For each of the up to 5 tools, you find there a pair of percentages, accumulating for tool(s). 
 
 It is a good idea to use at least 5 months of closing price data. 
 That amount gives the algorithms more to work with. You can use the sample
