@@ -16,7 +16,7 @@ Richer experience via desktop computer use. Please consider next few paragraphs,
 getting new data. 
 
 Alternatively, or in addition to those sample files, you may well obtain new csv files of closing price data 
-via RStudio, and the R language. Here follows a
+via RStudio, and the R language. Here follows 
 some implementation code for the R language for getting closing price data, 
 aiming toward csv file format:
 
