@@ -1,4 +1,4 @@
-# bears-bulls-my-5-tools
+# 0 bears-bulls-my-5-tools
 
 I have created a web app tool for simplifying traditional technial analysis.
 The web app simplifies or reduces each tool to a pair of percentages.
@@ -35,7 +35,7 @@ getSymbols("<your code>",src="yahoo",from="2024-08-01",to="2024-12-20")
 After you have the variable in the RStudio in global environment, 
 write R code to convert and save to a csv file (desktop needed). 
 
-Back to the web app. 
+# 3. Back to the web app. 
 
 The pair of percentages, in the final table, represent cumulative calculations, indicating an opinion.
 At the very-bottom of the table, the VIP % row, that row shows final outputs for the web app. 
@@ -45,5 +45,7 @@ The left-side cell, coded in green, shows the buy or yes vote percentage.
 On the right-side, coded in red, shows the sell or no vote percentage.
 
 You interpret the percentages as to persuasiveness. 
+
+# 3.1. chart for visualisation of percentage of votes or signals
 
 The graph is just a visual representation of the percentages. Best wishes. 
