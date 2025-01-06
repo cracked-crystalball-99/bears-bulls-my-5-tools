@@ -826,7 +826,7 @@ function updateVotesChart() {
 document.getElementById('loadSampleCsvButton').addEventListener('click', function () {
     const selectedFile = document.getElementById('sampleCsvDropdown').value;
     if (selectedFile) {
-        loadSampleCSV(`https://cors-anywhere.herokuapp.com/https://github.com/cracked-crystalball-99/bears-bulls-my-5-tools/raw/main/${selectedFile}`);
+        loadSampleCSV(`https://api.allorigins.win/get?url=https://github.com/cracked-crystalball-99/bears-bulls-my-5-tools/raw/main/${selectedFile}`);
     } else {
         alert('Please select a sample file from the dropdown menu.');
     }
@@ -834,9 +834,10 @@ document.getElementById('loadSampleCsvButton').addEventListener('click', functio
 
 function loadSampleCSV(url) {
     fetch(url)
-        .then(response => response.blob())
-        .then(blob => {
-            const file = new File([blob], "sample.csv", { type: blob.type });
+        .then(response => response.json())
+        .then(data => {
+            const csvContent = data.contents;
+            const file = new File([csvContent], "sample.csv", { type: "text/csv" });
             const dataTransfer = new DataTransfer();
             dataTransfer.items.add(file);
             
@@ -852,7 +853,6 @@ function loadSampleCSV(url) {
 }
 
 // Existing code...
-
 // Populate Table 1 with CSV data
 function populateTable1(csvData) {
     const table1Body = document.getElementById('csvTableBody');
