@@ -1,0 +1,147 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    margin-top: 20px;
+}
+
+form {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.section {
+    margin-bottom: 20px;
+    width: 90%;
+    max-width: 800px;
+}
+
+.section button {
+    margin-bottom: 10px;
+    display: block;
+    width: 100%;
+}
+
+.scrollable {
+    overflow-x: auto;
+    margin-bottom: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.green-cell {
+    background-color: green;
+    color: white;
+}
+
+.red-cell {
+    background-color: red;
+    color: white;
+}
+
+@media (max-width: 600px) {
+    .section button {
+        width: 100%;
+    }
+}
+
+/* Conditional formatting for ADXTR table */
+.adxtr-cell-1 {
+    background-color: green;
+    color: white;
+}
+
+.adxtr-cell--1 {
+    background-color: red;
+    color: white;
+}
+
+/* Existing styles */
+
+/* Full-width button */
+.full-width-button {
+    width: 100%;
+    display: block;
+    margin: 10px 0;
+}
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    width: 100%; /* Ensure the tooltip container is full width */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 250px;
+    background-color: #555;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position the tooltip above the text */
+    left: 50%;
+    margin-left: -125px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when hovering */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Responsive tooltips */
+@media (max-width: 600px) {
+    .tooltip .tooltiptext {
+        width: 200px;
+        left: 50%;
+        margin-left: -100px;
+    }
+}

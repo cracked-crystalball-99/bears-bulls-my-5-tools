@@ -1,0 +1,704 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Technical Analysis Tool</title>
+    <link rel="stylesheet" href="styles-testing.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Technical Analysis Tool</h1>
+
+    <!-- Form to load CSV file -->
+    <form id="csvForm">
+        <label for="csvFile">Choose CSV file:</label>
+        <input type="file" id="csvFile" accept=".csv" title="Choose a CSV file">
+        <button type="submit">Load CSV</button>
+    </form>
+
+    <!-- Container for buttons and tables -->
+    <div class="container">
+        <!-- Table 1: Displaying CSV File Data -->
+        <h2>Displaying My Yahoo CSV File Data (Table 1)</h2>
+        <div class="scrollable">
+            <table id="csvTable">
+                <thead id="csvTableHead">
+                    <tr>
+                        <th>Date</th>
+                        <th>Open</th>
+                        <th>High</th>
+                        <th>Low</th>
+                        <th>Close</th>
+                        <th>Adj Close</th>
+                        <th>Volume</th>
+                    </tr>
+                </thead>
+                <tbody id="csvTableBody"></tbody>
+            </table>
+        </div>
+
+        <!-- ADX Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeAdxValuesButton">Compute ADX Values</button>
+                <span class="tooltiptext">
+                    <strong>What is ADX?</strong> The Average Directional Index (ADX) measures the strength of a trend. <br><br>
+                    <strong>What can it do for me as a trader?</strong> ADX helps identify strong trends, which can be useful for making trading decisions. <br><br>
+                    <strong>How can it be calculated?</strong> ADX is calculated using the difference between the positive and negative directional indicators over a specified period.
+                </span>
+            </div>
+            <h2>ADX Values (Table 2)</h2>
+            <div class="scrollable">
+                <table id="adxTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>DI+</th>
+                            <th>DI-</th>
+                            <th>DX</th>
+                            <th>ADX</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adxTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ADXTR Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeAdxtrValuesButton">Compute ADXTR Values</button>
+                <span class="tooltiptext">
+                    <strong>What is ADXTR?</strong> ADX Trading Signals (ADXTR) are generated based on ADX values. <br><br>
+                    <strong>What can it do for me as a trader?</strong> ADXTR provides buy and sell signals based on the strength of the trend, helping traders make informed decisions. <br><br>
+                    <strong>How can it be calculated?</strong> ADXTR signals are generated when ADX crosses certain thresholds, indicating changes in trend strength.
+                </span>
+            </div>
+            <h2>ADXTR Values (Table 3)</h2>
+            <div class="scrollable">
+                <table id="adxtrTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>ADXTR</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adxtrTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Add other tables as needed -->
+
+    </div>
+
+        <!-- BB Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeBbValuesButton" class="full-width-button">Compute BB Values</button>
+                <span class="tooltiptext">
+                    <strong>What is BB?</strong> Bollinger Bands (BB) measure volatility by plotting bands around a moving average. <br><br>
+                    <strong>What can it do for me as a trader?</strong> BB helps identify overbought and oversold conditions, as well as potential price breakouts. <br><br>
+                    <strong>How can it be calculated?</strong> BB is calculated using a moving average and standard deviations to plot upper and lower bands.
+                </span>
+            </div>
+            <h2>BB Values (Table 4)</h2>
+            <div class="scrollable">
+                <table id="bbTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Lower Band</th>
+                            <th>Mean</th>
+                            <th>Upper Band</th>
+                            <th>%B</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bbTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- BBTR Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeBbtrValuesButton" class="full-width-button">Compute BBTR Values</button>
+                <span class="tooltiptext">
+                    <strong>What is BBTR?</strong> Bollinger Bands Trading Signals (BBTR) are generated based on BB values. <br><br>
+                    <strong>What can it do for me as a trader?</strong> BBTR provides buy and sell signals based on the price's interaction with the Bollinger Bands. <br><br>
+                    <strong>How can it be calculated?</strong> BBTR signals are generated when the price crosses the upper or lower Bollinger Bands.
+                </span>
+            </div>
+            <h2>BBTR Values (Table 5)</h2>
+            <div class="scrollable">
+                <table id="bbtrTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>BBTR</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bbtrTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- CCI Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeCciValuesButton" class="full-width-button">Compute CCI Values</button>
+                <span class="tooltiptext">
+                    <strong>What is CCI?</strong> The Commodity Channel Index (CCI) measures the deviation of the price from its average. <br><br>
+                    <strong>What can it do for me as a trader?</strong> CCI helps identify overbought and oversold conditions, as well as potential trend reversals. <br><br>
+                    <strong>How can it be calculated?</strong> CCI is calculated using the typical price, a moving average, and the mean deviation.
+                </span>
+            </div>
+            <h2>CCI Values (Table 6)</h2>
+            <div class="scrollable">
+                <table id="cciTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>CCI</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cciTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- CCITR Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeCcitrValuesButton" class="full-width-button">Compute CCITR Values</button>
+                <span class="tooltiptext">
+                    <strong>What is CCITR?</strong> Commodity Channel Index Trading Signals (CCITR) are generated based on CCI values. <br><br>
+                    <strong>What can it do for me as a trader?</strong> CCITR provides buy and sell signals based on the CCI's interaction with overbought and oversold levels. <br><br>
+                    <strong>How can it be calculated?</strong> CCITR signals are generated when the CCI crosses certain thresholds, indicating overbought or oversold conditions.
+                </span>
+            </div>
+            <h2>CCITR Values (Table 7)</h2>
+            <div class="scrollable">
+                <table id="ccitrTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>CCITR</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ccitrTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- MACD Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeMacdValuesButton" class="full-width-button">Compute MACD Values</button>
+                <span class="tooltiptext">
+                    <strong>What is MACD?</strong> The Moving Average Convergence Divergence (MACD) is a trend-following momentum indicator. <br><br>
+                    <strong>What can it do for me as a trader?</strong> MACD helps identify changes in the strength, direction, momentum, and duration of a trend. <br><br>
+                    <strong>How can it be calculated?</strong> MACD is calculated by subtracting the 26-period EMA from the 12-period EMA, with a 9-period EMA as the signal line.
+                </span>
+            </div>
+            <h2>MACD Values (Table 8)</h2>
+            <div class="scrollable">
+                <table id="macdTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>MACD</th>
+                            <th>Signal Line</th>
+                        </tr>
+                    </thead>
+                    <tbody id="macdTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- CMACD Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeCmacdValuesButton" class="full-width-button">Compute CMACD Values</button>
+                <span class="tooltiptext">
+                    <strong>What is CMACD?</strong> The Centreline Moving Average Convergence Divergence (CMACD) is a variation of the MACD. <br><br>
+                    <strong>What can it do for me as a trader?</strong> CMACD helps identify changes in the strength, direction, momentum, and duration of a trend. <br><br>
+                    <strong>How can it be calculated?</strong> CMACD is calculated similarly to MACD but focuses on the centerline crossovers.
+                </span>
+            </div>
+            <h2>CMACD Values (Table 9)</h2>
+            <div class="scrollable">
+                <table id="cmacdTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>CMACD</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cmacdTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SMACD Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeSmacdValuesButton" class="full-width-button">Compute SMACD Values</button>
+                <span class="tooltiptext">
+                    <strong>What is SMACD?</strong> The Signal Moving Average Convergence Divergence (SMACD) is a variation of the MACD. <br><br>
+                    <strong>What can it do for me as a trader?</strong> SMACD helps identify changes in the strength, direction, momentum, and duration of a trend. <br><br>
+                    <strong>How can it be calculated?</strong> SMACD is calculated similarly to MACD but focuses on the signal line crossovers.
+                </span>
+            </div>
+            <h2>SMACD Values (Table 10)</h2>
+            <div class="scrollable">
+                <table id="smacdTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>SMACD Signal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="smacdTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ROC Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeRocValuesButton" class="full-width-button">Compute ROC Values</button>
+                <span class="tooltiptext">
+                    <strong>What is ROC?</strong> The Rate of Change (ROC) measures the percentage change in price over a specified period. <br><br>
+                    <strong>What can it do for me as a trader?</strong> ROC helps identify the speed and magnitude of price changes, which can be useful for making trading decisions. <br><br>
+                    <strong>How can it be calculated?</strong> ROC is calculated by dividing the difference between the current price and the price n periods ago by the price n periods ago, then multiplying by 100.
+                </span>
+            </div>
+            <h2>ROC Values (Table 11)</h2>
+            <div class="scrollable">
+                <table id="rocTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Close</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rocTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ROCTR Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeRoctrValuesButton" class="full-width-button">Compute ROCTR Values</button>
+                <span class="tooltiptext">
+                    <strong>What is ROCTR?</strong> Rate of Change Trading Signals (ROCTR) are generated based on ROC values. <br><br>
+                    <strong>What can it do for me as a trader?</strong> ROCTR provides buy and sell signals based on the ROC's interaction with certain thresholds. <br><br>
+                    <strong>How can it be calculated?</strong> ROCTR signals are generated when the ROC crosses certain thresholds, indicating changes in momentum.
+                </span>
+            </div>
+            <h2>ROCTR Values (Table 12)</h2>
+            <div class="scrollable">
+                <table id="roctrTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>ROCTR</th>
+                        </tr>
+                    </thead>
+                    <tbody id="roctrTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+    <!-- New Tables (13-26) -->
+        <!-- RSI Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeRsiValuesButton" class="full-width-button">Compute RSI Values</button>
+                <span class="tooltiptext">
+                    <strong>What is RSI?</strong> The Relative Strength Index (RSI) measures the speed and change of price movements. <br><br>
+                    <strong>What can it do for me as a trader?</strong> RSI helps identify overbought and oversold conditions, which can be useful for making trading decisions. <br><br>
+                    <strong>How can it be calculated?</strong> RSI is calculated using the average gains and losses over a specified period, typically 14 days.
+                </span>
+            </div>
+            <h2>RSI Values (Table 13)</h2>
+            <div class="scrollable">
+                <table id="rsiTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>RSI</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rsiTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- RSITR Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeRsitrValuesButton" class="full-width-button">Compute RSITR Values</button>
+                <span class="tooltiptext">
+                    <strong>What is RSITR?</strong> Relative Strength Index Trading Signals (RSITR) are generated based on RSI values. <br><br>
+                    <strong>What can it do for me as a trader?</strong> RSITR provides buy and sell signals based on the RSI's interaction with overbought and oversold levels. <br><br>
+                    <strong>How can it be calculated?</strong> RSITR signals are generated when the RSI crosses certain thresholds, indicating overbought or oversold conditions.
+                </span>
+            </div>
+            <h2>RSITR Values (Table 14)</h2>
+            <div class="scrollable">
+                <table id="rsitrTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>RSITR</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rsitrTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SAR Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeSarValuesButton" class="full-width-button">Compute SAR Values</button>
+                <span class="tooltiptext">
+                    <strong>What is SAR?</strong> The Parabolic Stop and Reverse (SAR) is a trend-following indicator that sets trailing stop-loss levels. <br><br>
+                    <strong>What can it do for me as a trader?</strong> SAR helps identify potential reversals in the direction of the price movement, which can be useful for setting stop-loss levels and identifying entry and exit points. <br><br>
+                    <strong>How can it be calculated?</strong> SAR is calculated using the most recent extreme price (EP) and an acceleration factor (AF).
+                </span>
+            </div>
+            <h2>SAR Values (Table 15)</h2>
+            <div class="scrollable">
+                <table id="sarTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>SAR</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sarTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SARTR Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeSartrValuesButton" class="full-width-button">Compute SARTR Values</button>
+                <span class="tooltiptext">
+                    <strong>What is SARTR?</strong> SAR Trading Signals (SARTR) are generated based on SAR values. <br><br>
+                    <strong>What can it do for me as a trader?</strong> SARTR provides buy and sell signals based on the SAR's interaction with the price, helping traders make informed decisions. <br><br>
+                    <strong>How can it be calculated?</strong> SARTR signals are generated when the price crosses the SAR, indicating potential reversals.
+                </span>
+            </div>
+            <h2>SARTR Values (Table 16)</h2>
+            <div class="scrollable">
+                <table id="sartrTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>SARTR</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sartrTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SMI Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeSmiValuesButton" class="full-width-button">Compute SMI Values</button>
+                <span class="tooltiptext">
+                    <strong>What is SMI?</strong> The Stochastic Momentum Index (SMI) measures the position of the current close relative to the midpoint of the recent high/low range. <br><br>
+                    <strong>What can it do for me as a trader?</strong> SMI helps identify overbought and oversold conditions, as well as potential trend reversals. <br><br>
+                    <strong>How can it be calculated?</strong> SMI is calculated using the difference between the current close and the midpoint of the recent high/low range, smoothed using exponential moving averages.
+                </span>
+            </div>
+            <h2>SMI Values (Table 17)</h2>
+            <div class="scrollable">
+                <table id="smiTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>SMI</th>
+                        </tr>
+                    </thead>
+                    <tbody id="smiTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SMITR Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeSmitrValuesButton" class="full-width-button">Compute SMITR Values</button>
+                <span class="tooltiptext">
+                    <strong>What is SMITR?</strong> Stochastic Momentum Index Trading Signals (SMITR) are generated based on SMI values. <br><br>
+                    <strong>What can it do for me as a trader?</strong> SMITR provides buy and sell signals based on the SMI's interaction with overbought and oversold levels. <br><br>
+                    <strong>How can it be calculated?</strong> SMITR signals are generated when the SMI crosses certain thresholds, indicating overbought or oversold conditions.
+                </span>
+            </div>
+            <h2>SMITR Values (Table 18)</h2>
+            <div class="scrollable">
+                <table id="smitrTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>SMITR</th>
+                        </tr>
+                    </thead>
+                    <tbody id="smitrTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- WPR Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeWprValuesButton" class="full-width-button">Compute WPR Values</button>
+                <span class="tooltiptext">
+                    <strong>What is WPR?</strong> Williams %R (WPR) is a momentum indicator that measures overbought and oversold levels. <br><br>
+                    <strong>What can it do for me as a trader?</strong> WPR helps identify overbought and oversold conditions, as well as potential trend reversals. <br><br>
+                    <strong>How can it be calculated?</strong> WPR is calculated using the highest high, lowest low, and the most recent closing price over a specified period.
+                </span>
+            </div>
+            <h2>WPR Values (Table 19)</h2>
+            <div class="scrollable">
+                <table id="wprTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>WPR</th>
+                        </tr>
+                    </thead>
+                    <tbody id="wprTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- WPRTR Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeWprtrValuesButton" class="full-width-button">Compute WPRTR Values</button>
+                <span class="tooltiptext">
+                    <strong>What is WPRTR?</strong> Williams %R Trading Signals (WPRTR) are generated based on WPR values. <br><br>
+                    <strong>What can it do for me as a trader?</strong> WPRTR provides buy and sell signals based on the WPR's interaction with overbought and oversold levels. <br><br>
+                    <strong>How can it be calculated?</strong> WPRTR signals are generated when the WPR crosses certain thresholds, indicating overbought or oversold conditions.
+                </span>
+            </div>
+            <h2>WPRTR Values (Table 20)</h2>
+            <div class="scrollable">
+                <table id="wprtrTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>WPRTR</th>
+                        </tr>
+                    </thead>
+                    <tbody id="wprtrTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SMA5 Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeSma5ValuesButton" class="full-width-button">Compute SMA5 Values</button>
+                <span class="tooltiptext">
+                    <strong>What is SMA5?</strong> The Simple Moving Average (SMA) for 5 observations calculates the average of the closing prices for the last 5 periods. <br><br>
+                    <strong>What can it do for me as a trader?</strong> SMA5 helps identify the direction of the trend and can act as a support or resistance level. <br><br>
+                    <strong>How can it be calculated?</strong> SMA5 is calculated by adding the closing prices of the last 5 periods and dividing by 5.
+                </span>
+            </div>
+            <h2>SMA5 Values (Table 21)</h2>
+            <div class="scrollable">
+                <table id="sma5Table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>SMA5</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sma5TableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Table 22: CCISMATR Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeCcismatrValuesButton" class="full-width-button">Compute CCISMATR Values</button>
+                <span class="tooltiptext">
+                    <strong>What is CCISMATR?</strong> Commodity Channel Index Simple Moving Average Trading Signals (CCISMATR) are generated based on CCI and SMA values. <br><br>
+                    <strong>What can it do for me as a trader?</strong> CCISMATR provides buy and sell signals based on the interaction of CCI and SMA, helping traders make informed decisions. <br><br>
+                    <strong>How can it be calculated?</strong> CCISMATR signals are generated when the CCI crosses above or below the SMA, indicating potential buy or sell opportunities.
+                </span>
+            </div>
+            <h2>CCISMATR Values (Table 22)</h2>
+            <div class="scrollable">
+                <table id="ccismatrTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Signal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ccismatrTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Table 23: ROCSMATR Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeRocsmatrValuesButton" class="full-width-button">Compute ROCSMATR Values</button>
+                <span class="tooltiptext">
+                    <strong>What is ROCSMATR?</strong> Rate of Change Simple Moving Average Trading Signals (ROCSMATR) are generated based on ROC and SMA values. <br><br>
+                    <strong>What can it do for me as a trader?</strong> ROCSMATR provides buy and sell signals based on the interaction of ROC and SMA, helping traders make informed decisions. <br><br>
+                    <strong>How can it be calculated?</strong> ROCSMATR signals are generated when the ROC crosses above or below the SMA, indicating potential buy or sell opportunities.
+                </span>
+            </div>
+            <h2>ROCSMATR Values (Table 23)</h2>
+            <div class="scrollable">
+                <table id="rocsmatrTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Signal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rocsmatrTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Table 24: RSISMATR Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeRsismatrValuesButton" class="full-width-button">Compute RSISMATR Values</button>
+                <span class="tooltiptext">
+                    <strong>What is RSISMATR?</strong> Relative Strength Index Simple Moving Average Trading Signals (RSISMATR) are generated based on RSI and SMA values. <br><br>
+                    <strong>What can it do for me as a trader?</strong> RSISMATR provides buy and sell signals based on the interaction of RSI and SMA, helping traders make informed decisions. <br><br>
+                    <strong>How can it be calculated?</strong> RSISMATR signals are generated when the RSI crosses above or below the SMA, indicating potential buy or sell opportunities.
+                </span>
+            </div>
+            <h2>RSISMATR Values (Table 24)</h2>
+            <div class="scrollable">
+                <table id="rsismatrTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Signal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rsismatrTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Table 25: SMISMATR Values -->
+        <div class="section">
+            <div class="tooltip full-width-button">
+                <button id="computeSmismatrValuesButton" class="full-width-button">Compute SMISMATR Values</button>
+                <span class="tooltiptext">
+                    <strong>What is SMISMATR?</strong> Stochastic Momentum Index Simple Moving Average Trading Signals (SMISMATR) are generated based on SMI and SMA values. <br><br>
+                    <strong>What can it do for me as a trader?</strong> SMISMATR provides buy and sell signals based on the interaction of SMI and SMA, helping traders make informed decisions. <br><br>
+                    <strong>How can it be calculated?</strong> SMISMATR signals are generated when the SMI crosses above or below the SMA, indicating potential buy or sell opportunities.
+                </span>
+            </div>
+            <h2>SMISMATR Values (Table 25)</h2>
+            <div class="scrollable">
+                <table id="smismatrTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>SMISMATR</th>
+                        </tr>
+                    </thead>
+                    <tbody id="smismatrTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Table 26: WPRSMATR Values -->
+        <div class ="section">
+            <div class="tooltip full-width-button">
+                <button id="computeWprsmatrValuesButton" class="full-width-button">Compute WPRSMATR Values</button>
+                <span class="tooltiptext">
+                    <strong>What is WPRSMATR?</strong> Williams Percent Range Simple Moving Average Trading Signals (WPRSMATR) are generated based on WPR and SMA values. <br><br>
+                    <strong>What can it do for me as a trader?</strong> WPRSMATR provides buy and sell signals based on the interaction of WPR and SMA, helping traders make informed decisions. <br><br>
+                    <strong>How can it be calculated?</strong> WPRSMATR signals are generated when the WPR crosses above or below the SMA, indicating potential buy or sell opportunities.
+                </span>
+            </div>
+            <h2>WPRSMATR Values (Table 26)</h2>
+            <div class="scrollable">
+                <table id="wprsmatrTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>WPRSMATR</th>
+                        </tr>
+                    </thead>
+                    <tbody id="wprsmatrTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+    
+    <!-- Votes Innovative Percentages (VIP %) -->
+    <h2>Votes Innovative Percentages (VIP %)</h2>
+    <div class="scrollable">
+        <table id="votesTable">
+            <thead>
+                <tr>
+                    <th>Technical Analysis Tool (TAT)</th>
+                    <th>Buy?</th>
+                    <th>Sell?</th>
+                    <th>Tool Voice Count (TVC)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Tool #1 Average Directional Index Trading Signals (ADXTR)</td>
+                    <td id="b2"></td> <!-- Buy votes -->
+                    <td id="c2"></td> <!-- Sell votes -->
+                    <td id="d2"></td> <!-- Total voice count & Conditional formatting cell -->
+                </tr>
+                <tr><td>Tool #2 Bollinger Bands Trading Signals (BBTR)</td><td id="b3"></td><td id="c3"></td><td id="d3"></td></tr>
+                <tr><td>Tool #3 Commodity Channel Index Trading Signals (CCITR)</td><td id="b4"></td><td id="c4"></td><td id="d4"></td></tr>
+                <tr><td>Tool #4 Centreline Moving Average Convergence Divergence (MACD) Trading Signals (CMACDTR)</td><td id="b5"></td><td id="c5"></td><td id="d5"></td></tr>
+                <tr><td>Tool #5 Signal Moving Average Convergence Divergence (MACD) Trading Signals (SMACDTR)</td><td id="b6"></td><td id="c6"></td><td id="d6"></td></tr>
+                <tr><td>Tool #6 Rate of Change Trading Signals (ROCTR)</td><td id="b7"></td><td id="c7"></td><td id="d7"></td></tr>
+                <tr><td>Tool #7 Relative Strength Index Trading Signals (RSITR)</td><td id="b8"></td><td id="c8"></td><td id="d8"></td></tr>
+                <tr><td>Tool #8 Stop and Reverse Trading Signals (SARTR)</td><td id="b9"></td><td id="c9"></td><td id="d9"></td></tr>
+                <tr><td>Tool #9 Stochastic Momentum Index Trading Signals (SMITR)</td><td id="b10"></td><td id="c10"></td><td id="d10"></td></tr>
+                <tr><td>Tool #10 Williams % R Trading Signals (WPRTR)</td><td id="b11"></td><td id="c11"></td><td id="d11"></td></tr>
+                <tr><td>Tool #11 Commodity Channel Index Simple Moving Average Trading Signals (CCISMATR)</td><td id="b12"></td><td id="c12"></td><td id="d12"></td></tr>
+                <tr><td>Tool #12 Rate of Change Simple Moving Average Trading Signals (ROCSMATR)</td><td id="b13"></td><td id="c13"></td><td id="d13"></td></tr>
+                <tr><td>Tool #13 Relative Strength Index Simple Moving Average Trading Signals (RSISMATR)</td><td id="b14"></td><td id="c14"></td><td id="d14"></td></tr>
+                <tr><td>Tool #14 Stochastic Momentum Index Simple Moving Average Trading Signals (SMISMATR)</td><td id="b15"></td><td id="c15"></td><td id="d15"></td></tr>
+                <tr><td>Tool #15 Williams % R Simple Moving Average Trading Signals (WPRSMATR)</td><td id="b16"></td><td id="c16"></td><td id="d16"></td></tr>
+                <!-- Tool Group Voice Count (TGVC) row -->
+                <tr><td>Tool Group Voice Count (TGVC)</td><td id="b17"></td><td id="c17"></td></tr>
+                <!-- VIP % row -->
+                <tr><td>VIP %</td><td id="b18" class="green-cell"></td><td id="c18" class="red-cell"></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Chart Section for All Tools -->
+    <div class="section">
+        <h2>Tool #s 1-15 Votes Chart</h2>
+        <canvas id="allToolsVotesChart" width="800" height="400"></canvas>
+    </div>
+   
+    <script src="main.js?v=1.61"></script>
+</body>
+</html>
