@@ -820,6 +820,39 @@ function updateVotesChart() {
     });
 }
 
+// Existing code...
+
+// Event listener for loading sample CSV file
+document.getElementById('loadSampleCsvButton').addEventListener('click', function () {
+    const selectedFile = document.getElementById('sampleCsvDropdown').value;
+    if (selectedFile) {
+        loadSampleCSV(`https://cors-anywhere.herokuapp.com/https://github.com/cracked-crystalball-99/bears-bulls-my-5-tools/raw/main/${selectedFile}`);
+    } else {
+        alert('Please select a sample file from the dropdown menu.');
+    }
+});
+
+function loadSampleCSV(url) {
+    fetch(url)
+        .then(response => response.blob())
+        .then(blob => {
+            const file = new File([blob], "sample.csv", { type: blob.type });
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            
+            const csvFileInput = document.getElementById('csvFile');
+            csvFileInput.files = dataTransfer.files;
+            
+            document.getElementById('csvForm').dispatchEvent(new Event('submit', { 'bubbles': true }));
+        })
+        .catch(error => {
+            console.error('Error fetching the CSV file:', error);
+            alert('Failed to load the sample CSV file. Please try again.');
+        });
+}
+
+// Existing code...
+
 // Populate Table 1 with CSV data
 function populateTable1(csvData) {
     const table1Body = document.getElementById('csvTableBody');
