@@ -14,7 +14,23 @@
     <!-- Add your download links here -->
     <div>
         <h2>Download Files</h2>
-        <a href="https://github.com/cracked-crystalball-99/bears-bulls-my-5-tools/raw/main/AMZN.csv" download="AMZN.csv">Download Amazon Sample</a>
+       <a href="javascript:void(0);" onclick="downloadFile('https://github.com/cracked-crystalball-99/bears-bulls-my-5-tools/raw/main/AMZN.csv', 'AMZN.csv')">Download Amazon Sample</a>
+
+<script>
+    function downloadFile(url, filename) {
+        fetch(url)
+            .then(response => response.blob())
+            .then(blob => {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.setAttribute('download', filename);
+                document.body.appendChild(link);
+                link.click();
+                link.parentNode.removeChild(link);
+            })
+            .catch(console.error);
+    }
+</script>
         <a href="https://github.com/cracked-crystalball-99/bears-bulls-my-5-tools/raw/main/BHP.AX.csv" download="BHP.AX.csv">Download BHP Sample</a>
         <a href="https://github.com/cracked-crystalball-99/bears-bulls-my-5-tools/raw/main/GME.csv" download="GME.csv">Download GameStop Sample</a>
     </div>
