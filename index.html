@@ -12,14 +12,26 @@
     <h1>Technical Analysis Tool</h1>
 
     <!-- Add your download links here -->
-    <div>
-        <h2>Download Files</h2>
-      <a href="https://github.com/cracked-crystalball-99/bears-bulls-my-5-tools/raw/main/AMZN.AX.csv" download="AMZN.AX.csv">Download Amazon Sample</a>
-        <a href="https://github.com/cracked-crystalball-99/bears-bulls-my-5-tools/raw/main/BHP.AX.csv" download="BHP.AX.csv">Download BHP Sample</a>
-        <a href="https://github.com/cracked-crystalball-99/bears-bulls-my-5-tools/raw/main/GME.csv" download="GME.csv">Download GameStop Sample</a>
-    </div>
+    <!-- Button to load sample CSV data -->
+<button onclick="loadSampleCSV('https://github.com/cracked-crystalball-99/bears-bulls-my-5-tools/raw/main/AMZN.csv')">Load Amazon Sample CSV</button>
 
-    <!-- Rest of your content -->
+<script>
+    function loadSampleCSV(url) {
+        fetch(url)
+            .then(response => response.blob())
+            .then(blob => {
+                const file = new File([blob], "AMZN.csv", { type: blob.type });
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                
+                const csvFileInput = document.getElementById('csvFile');
+                csvFileInput.files = dataTransfer.files;
+                
+                document.getElementById('csvForm').dispatchEvent(new Event('submit', { 'bubbles': true }));
+            })
+            .catch(console.error);
+    }
+</script>
 
     <!-- Form to load CSV file -->
     <form id="csvForm">
