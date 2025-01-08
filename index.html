@@ -722,7 +722,9 @@
     function playSound() {
         audio.pause(); // Pause the audio if it's already playing
         audio.currentTime = 0; // Reset audio to start
-        audio.play();
+        audio.play().catch(function(error) {
+            console.log('Audio playback failed:', error);
+        });
     }
 
     // Ensure the audio is loaded and ready to play
@@ -730,7 +732,7 @@
         // Add event listeners to buttons and dropdown
         var elements = [
             document.getElementById('loadSampleCsvButton'),
-            document.getElementById('csvForm'),
+            document.getElementById('csvForm').querySelector('button[type="submit"]'),
             document.getElementById('sampleCsvDropdown')
         ];
 
