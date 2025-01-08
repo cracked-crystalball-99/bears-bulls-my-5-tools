@@ -712,31 +712,32 @@
     </div>
    
     <script src="main.js?v=1.61"></script>
-    <script src="main.js?v=1.61"></script>
+    <!-- Add JavaScript to handle sound effects -->
+<script>
+    // Preload the audio
+    var audio = new Audio('sounds/740033__itinerantmonk108__i-dont-think-so.mp3');
 
-        <!-- Add JavaScript to handle sound effects -->
-        <script>
-            // Function to play sound
-            function playSound(sound) {
-                var audio = new Audio(sound);
-                audio.play();
-            }
-    
-            // Add event listeners to buttons
-            document.getElementById('loadSampleCsvButton').addEventListener('click', function() {
-                playSound('sounds/740033__itinerantmonk108__i-dont-think-so.mp3');
-            });
-    
-            document.getElementById('csvForm').addEventListener('submit', function(event) {
-                event.preventDefault(); // Prevent form submission to play sound
-                playSound('sounds/740033__itinerantmonk108__i-dont-think-so.mp3');
-                // Add your form submission logic here
-            });
-    
-            // Add event listener to dropdown change
-            document.getElementById('sampleCsvDropdown').addEventListener('change', function() {
-                playSound('sounds/740033__itinerantmonk108__i-dont-think-so.mp3');
-            });
-        </script>
+    // Function to play sound
+    function playSound() {
+        audio.currentTime = 0; // Reset audio to start
+        audio.play();
+    }
+
+    // Add event listeners to buttons
+    document.getElementById('loadSampleCsvButton').addEventListener('click', function() {
+        playSound();
+    });
+
+    document.getElementById('csvForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission to play sound
+        playSound();
+        // Add your form submission logic here
+    });
+
+    // Add event listener to dropdown change
+    document.getElementById('sampleCsvDropdown').addEventListener('change', function() {
+        playSound();
+    });
+</script>
 </body>
 </html>
