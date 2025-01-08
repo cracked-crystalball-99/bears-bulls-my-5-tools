@@ -58,3 +58,31 @@ You interpret the percentages as to persuasiveness.
 # 3.1. chart for visualisation of percentage of votes or signals
 
 The graph is just a visual representation of the percentages. Best wishes. 
+
+# 4. Other
+
+# 4.1. Technical Analysis Tool
+
+A web application for technical analysis of stock data or crypo currencies, or both.
+
+## 4.2. Features
+
+- Load and display CSV files
+- Interactive charts using Chart.js
+
+## 4.3. Usage
+
+1. Clone the repository
+2. Open `index.html` in your browser
+
+## 4.4. License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 4.5. Attribution
+
+The sound effect used in this project is licensed under Creative Commons:
+
+Downloaded on January 8th, 2025
+     S: I don't think so... by itinerantmonk108 -- https://freesound.org/s/740033/ -- License: Creative Commons 0
+
