@@ -720,6 +720,7 @@
 
     // Function to play sound
     function playSound() {
+        audio.pause(); // Pause the audio if it's already playing
         audio.currentTime = 0; // Reset audio to start
         audio.play();
     }
