@@ -315,28 +315,46 @@ function calculateEma(values, period) {
 
 // Function to compute MACD
 function computeMacd(data) {
-    const macdData = [];
     const shortPeriod = 12;
     const longPeriod = 26;
     const signalPeriod = 9;
 
-    let shortEma = [];
-    let longEma = [];
-    let macdLine = [];
-    let signalLine = [];
+    const shortEma = [];
+    const longEma = [];
+    const macdLine = [];
+    const signalLine = [];
+    const macdData = [];
 
     for (let i = 0; i < data.length; i++) {
-        const close = parseFloat(data[i][4]); // Assuming 'Close' is the 5th column
+        let close = parseFloat(data[i][4]); // Assuming 'Close' is the 5th column
+        console.log(`Processing row ${i}, Close: ${close}`);
+
+        // Check if the leading digit is zero and not a decimal number starting with 0.
+        if (data[i][4].startsWith('0') && !data[i][4].startsWith('0.')) {
+            close *= 100; // Multiply by 100
+        }
 
         if (i >= shortPeriod - 1) {
-            const shortEmaValue = calculateEma(data.slice(i - shortPeriod + 1, i + 1).map(row => parseFloat(row[4])), shortPeriod);
+            const shortEmaValue = calculateEma(data.slice(i - shortPeriod + 1, i + 1).map(row => {
+                let value = parseFloat(row[4]);
+                if (row[4].startsWith('0') && !row[4].startsWith('0.')) {
+                    value *= 100; // Multiply by 100
+                }
+                return value;
+            }), shortPeriod);
             shortEma.push(shortEmaValue);
         } else {
             shortEma.push(NaN);
         }
 
         if (i >= longPeriod - 1) {
-            const longEmaValue = calculateEma(data.slice(i - longPeriod + 1, i + 1).map(row => parseFloat(row[4])), longPeriod);
+            const longEmaValue = calculateEma(data.slice(i - longPeriod + 1, i + 1).map(row => {
+                let value = parseFloat(row[4]);
+                if (row[4].startsWith('0') && !row[4].startsWith('0.')) {
+                    value *= 100; // Multiply by 100
+                }
+                return value;
+            }), longPeriod);
             longEma.push(longEmaValue);
         } else {
             longEma.push(NaN);
@@ -357,8 +375,8 @@ function computeMacd(data) {
             signalLine.push(NaN);
         }
 
-        const macd = isNaN(macdLine[macdLine.length - 1]) ? 'NA' : parseFloat(macdLine[macdLine.length - 1].toFixed(2));
-        const signal = isNaN(signalLine[signalLine.length - 1]) ? 'NA' : parseFloat(signalLine[signalLine.length - 1].toFixed(2));
+        const macd = isNaN(macdLine[macdLine.length - 1]) ? 'NA' : parseFloat(macdLine[macdLine.length - 1].toFixed(4));
+        const signal = isNaN(signalLine[signalLine.length - 1]) ? 'NA' : parseFloat(signalLine[signalLine.length - 1].toFixed(4));
 
         console.log(`Date: ${data[i][0]}, MACD: ${macd}, Signal: ${signal}`); // Debugging statement
 
@@ -371,6 +389,8 @@ function computeMacd(data) {
 
     return macdData;
 }
+
+// Add other functions and event listeners as needed...
 
 // Function to compute CMACD
 function computeCmacd(data) {
