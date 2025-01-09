@@ -66,7 +66,24 @@ function fetchData() {
         const cells = rows[i].getElementsByTagName('td');
         const rowData = [];
         for (let j = 0; j < cells.length; j++) {
-            rowData.push(cells[j].innerText);
+            let cellValue = cells[j].innerText.trim();
+            if (j === 4) { // Assuming 'Close' is the 5th column (0-based index)
+                let parsedValue = parseFloat(cellValue);
+                if (!isNaN(parsedValue)) {
+                    // Check if the leading digit is zero
+                    if (cellValue.startsWith('0') && !cellValue.startsWith('0.')) {
+                        cellValue = (parsedValue * 100).toFixed(3); // Multiply by 100 and format to 3 decimal places
+                    } else {
+                        cellValue = parsedValue.toFixed(3); // Format to 3 decimal places
+                    }
+                }
+            } else if (j >= 1 && j <= 5) { // Columns 2 to 6 (0-based index)
+                let parsedValue = parseFloat(cellValue);
+                if (!isNaN(parsedValue)) {
+                    cellValue = parsedValue.toFixed(3); // Format to 3 decimal places
+                }
+            }
+            rowData.push(cellValue);
         }
         data.push(rowData);
     }
@@ -113,6 +130,7 @@ document.getElementById('computeCcitrValuesButton').addEventListener('click', fu
     console.log('Sent data to worker for CCITR computation:', data);
 });
 
+// Event listener for MACD computation button
 document.getElementById('computeMacdValuesButton').addEventListener('click', function () {
     const data = fetchData();
     worker.postMessage({ type: 'computeMacd', data });
@@ -305,28 +323,26 @@ function populateTable7(ccitrData) {
     console.log('Populated Table 7 with CCITR values:', ccitrData);
 }
 
-// Populate Table 8 with MACD values
-function populateTable8(macdData) {
-    const table8Body = document.getElementById('macdTableBody');
-    table8Body.innerHTML = ''; // Clear existing data
+// Function to populate Table 8 with MACD values
+function populateTable8(data) {
+    const tableBody = document.getElementById('macdTableBody');
+    tableBody.innerHTML = ''; // Clear existing rows
 
-    macdData.forEach(row => {
-        const tableRow = document.createElement('tr');
-        const dateCell = document.createElement('td');
-        const macdCell = document.createElement('td');
-        const signalCell = document.createElement('td');
+    data.forEach(row => {
+        const tr = document.createElement('tr');
+        const dateTd = document.createElement('td');
+        const macdTd = document.createElement('td');
+        const signalTd = document.createElement('td');
 
-        dateCell.innerText = row.date;
-        macdCell.innerText = row.macd === 'NA' ? 'NA' : row.macd.toFixed(2);
-        signalCell.innerText = row.signal === 'NA' ? 'NA' : row.signal.toFixed(2);
+        dateTd.innerText = row.date;
+        macdTd.innerText = isNaN(row.macd) ? row.macd : parseFloat(row.macd).toFixed(4); // Ensure 4 decimal places if number
+        signalTd.innerText = isNaN(row.signal) ? row.signal : parseFloat(row.signal).toFixed(4); // Ensure 4 decimal places if number
 
-        tableRow.appendChild(dateCell);
-        tableRow.appendChild(macdCell);
-        tableRow.appendChild(signalCell);
-        table8Body.appendChild(tableRow);
+        tr.appendChild(dateTd);
+        tr.appendChild(macdTd);
+        tr.appendChild(signalTd);
+        tableBody.appendChild(tr);
     });
-
-    console.log('Populated Table 8 with MACD values:', macdData);
 }
 
 // Populate Table 9 with CMACD values
@@ -853,6 +869,7 @@ function loadSampleCSV(url) {
 }
 
 // Existing code...
+
 // Populate Table 1 with CSV data
 function populateTable1(csvData) {
     const table1Body = document.getElementById('csvTableBody');
