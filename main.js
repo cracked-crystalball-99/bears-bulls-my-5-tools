@@ -850,7 +850,12 @@ document.getElementById('loadSampleCsvButton').addEventListener('click', functio
 
 function loadSampleCSV(url) {
     fetch(url)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
             const csvContent = data.contents;
             const file = new File([csvContent], "sample.csv", { type: "text/csv" });
@@ -866,6 +871,32 @@ function loadSampleCSV(url) {
             console.error('Error fetching the CSV file:', error);
             alert('Failed to load the sample CSV file. Please try again.');
         });
+}
+
+function loadCsvFile(fileInputId, populateFunction) {
+    const fileInput = document.getElementById(fileInputId);
+    const file = fileInput.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            const csvData = event.target.result;
+            console.log('CSV file loaded:', csvData);
+            try {
+                populateFunction(csvData);
+            } catch (error) {
+                console.error('Error processing CSV file:', error.message);
+                alert('Error processing CSV file: ' + error.message);
+            }
+        };
+        reader.onerror = function (error) {
+            console.error('Error reading CSV file:', error);
+            alert('Error reading CSV file. Please try again.');
+        };
+        reader.readAsText(file);
+    } else {
+        alert('No file chosen');
+    }
 }
 
 // Existing code...
