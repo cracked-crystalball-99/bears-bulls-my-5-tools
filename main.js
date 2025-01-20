@@ -838,66 +838,7 @@ function updateVotesChart() {
 
 // Existing code...
 
-// Event listener for loading sample CSV file
-document.getElementById('loadSampleCsvButton').addEventListener('click', function () {
-    const selectedFile = document.getElementById('sampleCsvDropdown').value;
-    if (selectedFile) {
-        loadSampleCSV(`https://api.allorigins.win/get?url=https://github.com/cracked-crystalball-99/bears-bulls-my-5-tools/raw/main/${selectedFile}`);
-    } else {
-        alert('Please select a sample file from the dropdown menu.');
-    }
-});
 
-function loadSampleCSV(url) {
-    fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            const csvContent = data.contents;
-            const file = new File([csvContent], "sample.csv", { type: "text/csv" });
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(file);
-            
-            const csvFileInput = document.getElementById('csvFile');
-            csvFileInput.files = dataTransfer.files;
-            
-            document.getElementById('csvForm').dispatchEvent(new Event('submit', { 'bubbles': true }));
-        })
-        .catch(error => {
-            console.error('Error fetching the CSV file:', error);
-            alert('Failed to load the sample CSV file. Please try again.');
-        });
-}
-
-function loadCsvFile(fileInputId, populateFunction) {
-    const fileInput = document.getElementById(fileInputId);
-    const file = fileInput.files[0];
-
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function (event) {
-            const csvData = event.target.result;
-            console.log('CSV file loaded:', csvData);
-            try {
-                populateFunction(csvData);
-            } catch (error) {
-                console.error('Error processing CSV file:', error.message);
-                alert('Error processing CSV file: ' + error.message);
-            }
-        };
-        reader.onerror = function (error) {
-            console.error('Error reading CSV file:', error);
-            alert('Error reading CSV file. Please try again.');
-        };
-        reader.readAsText(file);
-    } else {
-        alert('No file chosen');
-    }
-}
 
 // Existing code...
 

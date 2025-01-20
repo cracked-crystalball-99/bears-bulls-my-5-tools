@@ -14,14 +14,7 @@
     <!-- Custom Text and Link -->
     <p>Check out my other project: <a href="https://cracked-crystalball-99.github.io/BJ-FM-js-chess-engine-fun/" target="_blank">Fun JavaScript Chess Engine</a></p>
 
-    <!-- Dropdown to select sample CSV file -->
-    <select id="sampleCsvDropdown">
-        <option value="">Select a sample file</option>
-        <option value="AMZN.csv">AMZN.csv</option>
-        <option value="BHP.AX.csv">BHP.AX.csv</option>
-        <option value="GME.csv">GME.csv</option>
-    </select>
-    <button id="loadSampleCsvButton">Load Selected Sample CSV</button>
+    
 
     <!-- Form to load CSV file -->
     <form id="csvForm">
@@ -713,52 +706,6 @@
    
     <script src="main.js?v=1.61"></script>
 
-<!-- Add JavaScript to handle sound effects -->
-<script>
-    // Create an AudioContext
-    var audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-    // Load the audio file
-    var audioBuffer;
-    fetch('sounds/740033__itinerantmonk108__i-dont-think-so.mp3')
-        .then(response => response.arrayBuffer())
-        .then(data => audioContext.decodeAudioData(data))
-        .then(buffer => {
-            audioBuffer = buffer;
-        })
-        .catch(error => console.error('Error loading audio file:', error));
-
-    // Function to play sound
-    function playSound() {
-        if (audioBuffer) {
-            var source = audioContext.createBufferSource();
-            source.buffer = audioBuffer;
-            source.connect(audioContext.destination);
-            source.start(0);
-        }
-    }
-
-    // Add event listeners to buttons and dropdown
-    document.addEventListener('DOMContentLoaded', function() {
-        var elements = [
-            document.getElementById('loadSampleCsvButton'),
-            document.getElementById('csvForm').querySelector('button[type="submit"]'),
-            document.getElementById('sampleCsvDropdown')
-        ];
-
-        elements.forEach(function(element) {
-            if (element) {
-                element.addEventListener('click', function(event) {
-                    playSound();
-                });
-
-                element.addEventListener('touchstart', function(event) {
-                    playSound();
-                });
-            }
-        });
-    });
-</script>
+        
 </body>
 </html>
-
