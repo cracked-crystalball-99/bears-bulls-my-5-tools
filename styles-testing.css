@@ -1,4 +1,5 @@
-﻿body {
+﻿/* General styles */
+body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -165,4 +166,84 @@ th {
         left: 50%;
         margin-left: -100px;
     }
+}
+
+/* Suggestions dropdown */
+#suggestions {
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    width: 100%;
+    background-color: #fff;
+    position: absolute;
+    z-index: 1000;
+}
+
+.suggestion {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.suggestion:hover {
+    background-color: #f0f0f0;
+}
+
+/* Date Picker and Ticker Search Styling */
+.date-picker, .ticker-search {
+    margin-bottom: 20px;
+    width: 90%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.date-picker label, .ticker-search label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.date-picker input, .ticker-search input {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.date-picker button, .ticker-search button {
+    background-color: #6f42c1; /* Purple */
+    color: #ffffff; /* White text */
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 300px;
+}
+
+.date-picker button:hover, .ticker-search button:hover {
+    background-color: #ffc107; /* Yellow on hover */
+}
+
+/* Pre-select buttons */
+.pre-select-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.pre-select {
+    background-color: #6f42c1; /* Purple */
+    color: #ffffff; /* White text */
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.pre-select:hover {
+    background-color: #ffc107; /* Yellow on hover */
 }
