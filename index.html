@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Technical Analysis Tool</title>
-    <link rel="stylesheet" href="styles-testing.css">
+    <link rel="stylesheet" href="styles-testing.css?v=2.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
     
   <!-- Google Analytics (Privacy-Compliant) -->
   <script>
@@ -24,9 +28,8 @@
         gtag('js', new Date());
         gtag('config', 'G-DY4TBEES4D', {
           anonymize_ip: true,
-          cookie_expires: 86400, // 1 day
-          page_title: 'Trading Analysis Tool',
-          custom_map: {'custom_parameter': 'tool_usage'}
+          cookie_expires: 86400,
+          page_title: 'Trading Analysis Tool'
         });
         
         // Load GA script
@@ -47,6 +50,10 @@
         document.cookie = '_ga_DY4TBEES4D=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         document.cookie = '_gid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
       };
+      
+      // Force privacy system refresh (cache-busting)
+      const privacyVersion = '2.0-' + new Date().toDateString();
+      localStorage.setItem('privacy-system-version', privacyVersion);
     })();
   </script>
 </head>
@@ -852,17 +859,34 @@
   <script>
     // Privacy Management Functions
     document.addEventListener('DOMContentLoaded', function() {
+      console.log('Privacy system loading...');
+      
       // Privacy Banner Management
       const analyticsConsent = localStorage.getItem('analytics-consent');
+      console.log('Current consent status:', analyticsConsent);
+      
+      // Force show privacy elements (for testing)
+      const privacyBanner = document.getElementById('privacyBanner');
+      const privacyStatus = document.getElementById('privacyStatus');
+      
+      console.log('Privacy banner element:', privacyBanner);
+      console.log('Privacy status element:', privacyStatus);
+      
       if (!analyticsConsent) {
         // Show banner if no consent decision made
         setTimeout(() => {
-          document.getElementById('privacyBanner').classList.add('show');
+          if (privacyBanner) {
+            privacyBanner.classList.add('show');
+            console.log('Privacy banner shown');
+          } else {
+            console.error('Privacy banner element not found!');
+          }
         }, 1000);
       }
       
       // Update privacy settings status
       updatePrivacyStatus();
+      console.log('Privacy system loaded');
     });
 
     function acceptAnalytics() {
