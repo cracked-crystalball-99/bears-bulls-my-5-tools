@@ -247,3 +247,108 @@ th {
 .pre-select:hover {
     background-color: #ffc107; /* Yellow on hover */
 }
+
+/* Privacy Consent Banner */
+.privacy-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px;
+    z-index: 9999;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 -2px 20px rgba(0,0,0,0.2);
+}
+
+.privacy-banner.show {
+    transform: translateY(0);
+}
+
+.privacy-banner-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.privacy-banner-text {
+    flex: 1;
+    min-width: 300px;
+    font-size: 0.9rem;
+}
+
+.privacy-banner-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.privacy-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 8px 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.privacy-btn-accept {
+    background: rgba(40, 167, 69, 0.8);
+    border-color: rgba(40, 167, 69, 0.9);
+}
+
+.privacy-btn-accept:hover {
+    background: #28a745;
+    transform: translateY(-2px);
+}
+
+.privacy-btn-decline {
+    background: rgba(220, 53, 69, 0.8);
+    border-color: rgba(220, 53, 69, 0.9);
+}
+
+.privacy-btn-decline:hover {
+    background: #dc3545;
+    transform: translateY(-2px);
+}
+
+.privacy-btn-info {
+    background: rgba(0, 123, 255, 0.8);
+    border-color: rgba(0, 123, 255, 0.9);
+}
+
+.privacy-btn-info:hover {
+    background: #007bff;
+    transform: translateY(-2px);
+}
+
+/* Responsive design for privacy banner */
+@media (max-width: 768px) {
+    .privacy-banner {
+        padding: 12px;
+    }
+    
+    .privacy-banner-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .privacy-banner-text {
+        min-width: auto;
+        margin-bottom: 10px;
+    }
+    
+    .privacy-btn {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+}

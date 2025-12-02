@@ -1,0 +1,31 @@
+# Development scripts (local only - privacy protection)
+sync-to-localhost.ps1
+sync-to-xampp.ps1
+sync-to-xampp.bat
+quick-sync.ps1
+quick-sync.bat
+
+# Local development files
+*.local.*
+.vscode/
+.idea/
+node_modules/
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# Private data files (not for public repo)
+*.private.*
+*-private.*
+private-*
+local-*
+localhost-*
+
+# Sync tracking files
+last-sync.txt
+sync-log.txt
+
+# Personal notes and development files
+dev-notes.md
+todo-private.md
+testing-notes.txt
