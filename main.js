@@ -813,7 +813,7 @@ function updateVotesChart() {
         allToolsVotesChart.destroy();
     }
 
-    // Create a new chart instance
+    // Create a new chart instance with modern Chart.js configuration
     allToolsVotesChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -822,14 +822,37 @@ function updateVotesChart() {
                 {
                     label: 'Votes',
                     data: [totalBuyVotes, totalSellVotes],
-                    backgroundColor: ['green', 'red']
+                    backgroundColor: [
+                        'rgba(40, 167, 69, 0.8)',   // Green for buy votes
+                        'rgba(220, 53, 69, 0.8)'    // Red for sell votes
+                    ],
+                    borderColor: [
+                        'rgba(40, 167, 69, 1)',
+                        'rgba(220, 53, 69, 1)'
+                    ],
+                    borderWidth: 1
                 }
             ]
         },
         options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                },
+                title: {
+                    display: true,
+                    text: 'Trading Analysis Tools - Vote Summary'
+                }
+            },
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
                 }
             }
         }
