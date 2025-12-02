@@ -27,9 +27,9 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-DY4TBEES4D', {
-          anonymize_ip: true,
-          cookie_expires: 86400,
-          page_title: 'Trading Analysis Tool'
+          'anonymize_ip': true,
+          'cookie_expires': 86400,
+          'send_page_view': true
         });
         
         // Load GA script
@@ -859,34 +859,21 @@
   <script>
     // Privacy Management Functions
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('Privacy system loading...');
-      
       // Privacy Banner Management
       const analyticsConsent = localStorage.getItem('analytics-consent');
-      console.log('Current consent status:', analyticsConsent);
-      
-      // Force show privacy elements (for testing)
-      const privacyBanner = document.getElementById('privacyBanner');
-      const privacyStatus = document.getElementById('privacyStatus');
-      
-      console.log('Privacy banner element:', privacyBanner);
-      console.log('Privacy status element:', privacyStatus);
       
       if (!analyticsConsent) {
         // Show banner if no consent decision made
         setTimeout(() => {
+          const privacyBanner = document.getElementById('privacyBanner');
           if (privacyBanner) {
             privacyBanner.classList.add('show');
-            console.log('Privacy banner shown');
-          } else {
-            console.error('Privacy banner element not found!');
           }
         }, 1000);
       }
       
       // Update privacy settings status
       updatePrivacyStatus();
-      console.log('Privacy system loaded');
     });
 
     function acceptAnalytics() {
@@ -921,24 +908,36 @@
     function enableAnalytics() {
       localStorage.setItem('analytics-consent', 'granted');
       updatePrivacyStatus();
-      location.reload();
-      document.getElementById('privacyBanner').classList.remove('show');
+      location.reload(); // Reload to activate analytics
+      const banner = document.getElementById('privacyBanner');
+      if (banner) banner.classList.remove('show');
     }
 
     function disableAnalytics() {
+      localStorage.setItem('analytics-consent', 'denied');
       window.clearAnalytics();
       updatePrivacyStatus();
+      const banner = document.getElementById('privacyBanner');
+      if (banner) banner.classList.remove('show');
     }
 
     function showPrivacyInfo() {
+      const consent = localStorage.getItem('analytics-consent');
       alert('Privacy Information:\n\n' +
             '• We use Google Analytics to understand how the trading analysis tool is used\n' +
             '• All data is anonymized and aggregated\n' +
             '• No personal information is collected or stored\n' +
             '• Cookies expire after 24 hours\n' +
-            '• You can disable analytics anytime\n' +
+            '• You can enable/disable analytics anytime\n' +
             '• The tool works fully without analytics\n\n' +
+            'Current status: ' + (consent || 'Not set') + '\n\n' +
             'Use the Enable/Disable buttons in Privacy Settings to change your choice anytime.');
+    }
+
+    // Helper function to reset privacy settings (for debugging)
+    function resetPrivacySettings() {
+      localStorage.removeItem('analytics-consent');
+      location.reload();
     }
   </script>
 
