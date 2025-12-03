@@ -8,6 +8,25 @@ body {
     align-items: center;
     background-color: #f8f9fa; /* Light Grey background */
     color: #343a40; /* Dark Grey text */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    width: 100vw;
+    box-sizing: border-box;
+}
+
+/* Ensure all elements stay within viewport */
+* {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+/* Main container to center and constrain all content */
+.main-container {
+    width: 100%;
+    max-width: 100vw;
+    margin: 0 auto;
+    padding: 20px;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 h1 {
@@ -31,6 +50,8 @@ form {
     margin-bottom: 20px;
     width: 90%;
     max-width: 800px;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 .section button {
@@ -94,49 +115,51 @@ th {
         z-index: 10;
     }
     
-    /* Table 1 mobile optimization - make all columns visible */
-    .section:first-of-type .scrollable {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+    /* Table 1 mobile optimization - fit all 7 columns without horizontal scroll */
+    .table1-container {
+        overflow-x: visible !important;
+        width: 100% !important;
     }
     
-    .section:first-of-type table {
-        min-width: 100%;
-        font-size: 11px;
+    .table1-mobile {
+        width: 100% !important;
+        table-layout: fixed !important;
+        font-size: 10px !important;
     }
     
-    .section:first-of-type th,
-    .section:first-of-type td {
-        padding: 4px 2px;
-        font-size: 11px;
-        white-space: nowrap;
-        min-width: 60px;
+    .table1-mobile th,
+    .table1-mobile td {
+        width: 14.28% !important; /* 100% / 7 columns */
+        padding: 4px 2px !important;
+        font-size: 10px !important;
+        text-align: center !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
     }
     
-    /* Compress Table 1 further on very small screens */
+    /* iPhone SE and smaller - ultra compact for all 7 columns */
     @media (max-width: 375px) {
-        .section:first-of-type table {
-            font-size: 10px;
+        .table1-mobile {
+            font-size: 9px !important;
         }
         
-        .section:first-of-type th,
-        .section:first-of-type td {
-            padding: 3px 1px;
-            font-size: 10px;
-            min-width: 50px;
+        .table1-mobile th,
+        .table1-mobile td {
+            padding: 3px 1px !important;
+            font-size: 9px !important;
         }
     }
     
-    /* iPhone SE specific optimization */
+    /* Very small screens - ensure readability */
     @media (max-width: 320px) {
-        .section:first-of-type table {
-            font-size: 9px;
+        .table1-mobile {
+            font-size: 8px !important;
         }
         
-        .section:first-of-type th,
-        .section:first-of-type td {
-            padding: 2px 1px;
-            font-size: 9px;
+        .table1-mobile th,
+        .table1-mobile td {
+            padding: 2px 1px !important;
+            font-size: 8px !important;
             min-width: 45px;
         }
     }
@@ -278,6 +301,13 @@ th {
         color: #333;
     }
     
+    /* Ensure tooltip is visible when active */
+    .tooltip.active .tooltiptext {
+        visibility: visible !important;
+        opacity: 1 !important;
+        display: block !important;
+    }
+    
     /* Add margin to tooltip container for lightbulb space */
     .tooltip {
         margin-bottom: 20px;
@@ -414,7 +444,29 @@ th {
         visibility: visible !important;
         opacity: 1 !important;
         z-index: 1000;
-        display: block;
+        display: block !important;
+    }
+    
+    /* Force tooltip visibility when active class is present */
+    @media (max-width: 768px) {
+        .tooltip.active .tooltiptext {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            background-color: rgba(0, 0, 0, 0.95) !important;
+            color: white !important;
+            padding: 60px 20px 20px 20px !important;
+            font-size: 16px !important;
+            z-index: 1000 !important;
+            overflow-y: auto !important;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
     }
     
     /* Mobile tooltip - full screen overlay with toggle button */
