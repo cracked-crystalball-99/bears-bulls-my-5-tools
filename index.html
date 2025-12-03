@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     <title>Technical Analysis Tool</title>
     <link rel="stylesheet" href="styles-testing.css?v=2.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
@@ -51,9 +48,10 @@
         document.cookie = '_gid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
       };
       
-      // Force privacy system refresh (cache-busting)
-      const privacyVersion = '2.0-' + new Date().toDateString();
-      localStorage.setItem('privacy-system-version', privacyVersion);
+      // Lightweight privacy system versioning
+      if (!localStorage.getItem('privacy-system-version')) {
+        localStorage.setItem('privacy-system-version', '2.0');
+      }
     })();
   </script>
 </head>
@@ -858,8 +856,8 @@
 
   <script>
     // Privacy Management Functions
-    document.addEventListener('DOMContentLoaded', function() {
-      // Privacy Banner Management
+    // Initialize privacy system after a delay to avoid conflicts
+    setTimeout(function() {
       const analyticsConsent = localStorage.getItem('analytics-consent');
       
       if (!analyticsConsent) {
@@ -869,12 +867,12 @@
           if (privacyBanner) {
             privacyBanner.classList.add('show');
           }
-        }, 1000);
+        }, 2000);
       }
       
       // Update privacy settings status
       updatePrivacyStatus();
-    });
+    }, 1500);
 
     function acceptAnalytics() {
       localStorage.setItem('analytics-consent', 'granted');

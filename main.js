@@ -836,15 +836,12 @@ function updateVotesChart() {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
+            aspectRatio: 2,
             plugins: {
                 legend: {
                     display: true,
                     position: 'top'
-                },
-                title: {
-                    display: true,
-                    text: 'Trading Analysis Tools - Vote Summary'
                 }
             },
             scales: {

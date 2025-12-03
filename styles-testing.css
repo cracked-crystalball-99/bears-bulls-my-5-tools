@@ -331,8 +331,30 @@ th {
     transform: translateY(-2px);
 }
 
+/* Chart container styling */
+#allToolsVotesChart {
+    max-height: 400px !important;
+    max-width: 100% !important;
+    height: 400px !important;
+}
+
+.section canvas {
+    max-height: 400px !important;
+    height: 400px !important;
+}
+
 /* Responsive design for privacy banner */
 @media (max-width: 768px) {
+    /* Mobile chart fixes */
+    #allToolsVotesChart {
+        max-height: 300px !important;
+        height: 300px !important;
+    }
+    
+    .section canvas {
+        max-height: 300px !important;
+        height: 300px !important;
+    }
     .privacy-banner {
         padding: 12px;
     }
