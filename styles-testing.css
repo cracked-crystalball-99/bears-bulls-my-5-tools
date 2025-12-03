@@ -53,6 +53,7 @@ form {
     margin-bottom: 20px;
     max-height: 400px;
     overflow-y: auto;
+    position: relative;
 }
 
 table {
@@ -66,9 +67,32 @@ th, td {
     text-align: left;
 }
 
+/* Sticky/Frozen table headers - default behavior for all tables */
 th {
     background-color: #6f42c1; /* Purple */
     color: #ffffff; /* White text */
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+}
+
+/* Ensure sticky headers work properly across all browsers */
+.scrollable thead th {
+    position: sticky;
+    top: 0;
+    background-color: #6f42c1;
+    color: #ffffff;
+    z-index: 10;
+}
+
+/* Additional mobile support for sticky headers */
+@media (max-width: 768px) {
+    th {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
 }
 
 /* Signal colors for table cells */
