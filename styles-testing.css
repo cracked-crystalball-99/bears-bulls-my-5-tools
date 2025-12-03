@@ -264,6 +264,34 @@ th {
         box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
     
+    /* Return to last tool button styling */
+    .return-to-tool-btn {
+        background-color: #fd7e14;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        margin: 15px auto;
+        display: none;
+        white-space: nowrap;
+    }
+    
+    .return-to-tool-btn:hover,
+    .return-to-tool-btn:active {
+        background-color: #e8680e;
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    }
+    
+    .return-to-tool-btn.show {
+        display: block;
+    }
+    
     @media (max-width: 600px) {
         .chart-header {
             flex-direction: column;
@@ -322,9 +350,9 @@ th {
     .tooltip .tooltiptext {
         position: fixed;
         top: 0;
-        left: 0;
-        right: 0;
-        width: 100vw;
+        left: 10px;
+        right: 10px;
+        width: calc(100vw - 20px);
         height: 50vh;
         background-color: rgba(0, 0, 0, 0.95);
         color: white;
@@ -336,6 +364,7 @@ th {
         overflow-y: auto;
         box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         backdrop-filter: blur(5px);
+        box-sizing: border-box;
     }
     
     /* Add close hint at top of tooltip */

@@ -115,6 +115,9 @@
                 <tbody id="csvTableBody"></tbody>
             </table>
         </div>
+        
+        <!-- Return to Last Tool Button -->
+        <button class="return-to-tool-btn" onclick="returnToLastTool()" id="returnToToolBtn">↓ Return to Last Tool</button>
 
         <!-- ADX Values -->
         <div class="section">
@@ -1005,11 +1008,49 @@
       }
     }
     
-    // Back to Table 1 navigation function
+    // Track last tool location
+    let lastToolButtonId = null;
+    
+    // Back to Table 1 navigation function - now tracks where user came from
     function scrollToTable1() {
+      // Find which section the user is currently in
+      const sections = document.querySelectorAll('.section');
+      sections.forEach((section, index) => {
+        if (index > 0) { // Skip first section (Table 1)
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+            const button = section.querySelector('button[id*="compute"]');
+            if (button && button.id) {
+              lastToolButtonId = button.id;
+              const returnBtn = document.getElementById('returnToToolBtn');
+              if (returnBtn) {
+                const toolName = button.textContent.replace('Compute ', '').replace(' Values', '');
+                returnBtn.textContent = `↓ Return to ${toolName}`;
+                returnBtn.classList.add('show');
+              }
+            }
+          }
+        }
+      });
+      
       const table1Section = document.querySelector('.section');
       if (table1Section) {
         table1Section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+    
+    // Return to last tool function
+    function returnToLastTool() {
+      if (lastToolButtonId) {
+        const lastButton = document.getElementById(lastToolButtonId);
+        if (lastButton) {
+          lastButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // Hide the return button after use
+          const returnBtn = document.getElementById('returnToToolBtn');
+          if (returnBtn) {
+            returnBtn.classList.remove('show');
+          }
+        }
       }
     }
 
