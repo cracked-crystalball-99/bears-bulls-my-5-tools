@@ -240,6 +240,30 @@ th {
         box-shadow: 0 3px 8px rgba(0,0,0,0.25);
     }
     
+    /* Back to Table 1 button styling */
+    .back-to-table1-btn {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 15px;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin: 0 auto 8px auto;
+        display: block;
+        white-space: nowrap;
+    }
+    
+    .back-to-table1-btn:hover,
+    .back-to-table1-btn:active {
+        background-color: #218838;
+        transform: scale(1.05);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    
     @media (max-width: 600px) {
         .chart-header {
             flex-direction: column;
