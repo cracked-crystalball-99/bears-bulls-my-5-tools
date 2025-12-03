@@ -869,8 +869,8 @@
             const clickX = e.clientX - rect.left;
             const clickY = e.clientY - rect.top;
             
-            // Check if click is in the lightbulb area (top-right corner)
-            const isLightbulbClick = clickX > rect.width - 30 && clickY < 30;
+            // Check if click is in the lightbulb area (positioned above and right of button)
+            const isLightbulbClick = clickX > rect.width - 95 && clickY < 10 && clickY > -20;
             
             if (isLightbulbClick) {
               e.preventDefault();
