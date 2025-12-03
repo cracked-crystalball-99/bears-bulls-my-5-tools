@@ -6,11 +6,20 @@
 
 class CustomBarChart {
     constructor(canvas, config) {
+        if (!canvas) {
+            throw new Error('CustomBarChart: Canvas element is required');
+        }
+        if (!config || !config.data) {
+            throw new Error('CustomBarChart: Configuration with data is required');
+        }
+        
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
         this.config = config;
         this.data = config.data;
         this.options = config.options || {};
+        
+        console.log('CustomBarChart initialized successfully');
         
         // Set canvas dimensions
         this.canvas.width = this.canvas.offsetWidth || 800;

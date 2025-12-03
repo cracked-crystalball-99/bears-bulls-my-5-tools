@@ -806,7 +806,7 @@ function updateVotesChart() {
         totalSellVotes += cValue;
     }
 
-    const ctx = document.getElementById('allToolsVotesChart').getContext('2d');
+    const canvas = document.getElementById('allToolsVotesChart');
 
     // Destroy the existing chart instance if it exists
     if (allToolsVotesChart) {
@@ -814,7 +814,7 @@ function updateVotesChart() {
     }
 
     // Create a new chart instance with custom chart implementation
-    allToolsVotesChart = new CustomBarChart(ctx.canvas, {
+    allToolsVotesChart = new CustomBarChart(canvas, {
         data: {
             labels: ['Buy Votes', 'Sell Votes'],
             datasets: [
