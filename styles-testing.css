@@ -178,15 +178,31 @@ th {
         position: relative;
     }
     
-    /* Add visual indicator for tappable tooltips on mobile */
+    /* Add clickable lightbulb indicator for tooltips on mobile */
     .tooltip::before {
         content: "💡";
         position: absolute;
         top: 5px;
         right: 5px;
-        font-size: 12px;
-        opacity: 0.7;
-        pointer-events: none;
+        font-size: 14px;
+        opacity: 0.8;
+        pointer-events: auto;
+        cursor: pointer;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #ddd;
+    }
+    
+    /* Active lightbulb when tooltip is shown */
+    .tooltip.active::before {
+        background: rgba(255, 255, 0, 0.3);
+        border-color: #ffa500;
     }
     
     /* Hide hover effects on mobile to prevent sticky hover */

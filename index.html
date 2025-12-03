@@ -856,38 +856,54 @@
 
   <script>
     // Privacy Management Functions
-    // Mobile-friendly tooltip system
+    // Mobile-friendly tooltip system with decoupled lightbulb control
     document.addEventListener('DOMContentLoaded', function() {
       const tooltips = document.querySelectorAll('.tooltip');
       
       tooltips.forEach(tooltip => {
+        // Handle clicks on the tooltip container
         tooltip.addEventListener('click', function(e) {
-          // On mobile devices or touch screens
+          // Check if we're on a touch device
           if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-            e.preventDefault();
+            const rect = this.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
             
-            // Toggle active class for this tooltip
-            const wasActive = this.classList.contains('active');
+            // Check if click is in the lightbulb area (top-right corner)
+            const isLightbulbClick = clickX > rect.width - 30 && clickY < 30;
             
-            // Remove active class from all tooltips
-            tooltips.forEach(t => t.classList.remove('active'));
-            
-            // If this tooltip wasn't active, make it active
-            if (!wasActive) {
-              this.classList.add('active');
+            if (isLightbulbClick) {
+              e.preventDefault();
+              e.stopPropagation();
+              
+              // Toggle tooltip visibility
+              const wasActive = this.classList.contains('active');
+              
+              // Remove active class from all other tooltips
+              tooltips.forEach(t => {
+                if (t !== this) t.classList.remove('active');
+              });
+              
+              // Toggle this tooltip
+              if (wasActive) {
+                this.classList.remove('active');
+              } else {
+                this.classList.add('active');
+              }
             }
+            // If not lightbulb click, let the button handle it normally
           }
         });
         
-        // Also handle button clicks inside tooltip to execute the original function
+        // Handle button clicks normally (no tooltip interference)
         const button = tooltip.querySelector('button');
         if (button) {
           button.addEventListener('click', function(e) {
-            // Allow the button click to proceed normally
-            // but remove tooltip active state after a delay
-            setTimeout(() => {
-              tooltip.classList.remove('active');
-            }, 100);
+            // On touch devices, don't interfere with button functionality
+            if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+              // Let the button work normally without affecting tooltips
+              return;
+            }
           });
         }
       });
