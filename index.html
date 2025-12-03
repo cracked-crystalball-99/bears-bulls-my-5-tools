@@ -981,8 +981,22 @@
         }
       });
       
-      // Close tooltips when clicking outside
+      // Close tooltips when clicking outside or on close button
       document.addEventListener('click', function(e) {
+        // Check if clicked on close button (pseudo-element)
+        const tooltip = e.target.closest('.tooltip');
+        if (tooltip && tooltip.classList.contains('active')) {
+          const rect = tooltip.querySelector('.tooltiptext').getBoundingClientRect();
+          const clickX = e.clientX;
+          const clickY = e.clientY;
+          
+          // Close button area (top right)
+          if (clickX > window.innerWidth - 100 && clickY < 50) {
+            tooltip.classList.remove('active');
+            return;
+          }
+        }
+        
         if (!e.target.closest('.tooltip')) {
           tooltips.forEach(t => t.classList.remove('active'));
         }

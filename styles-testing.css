@@ -93,6 +93,53 @@ th {
         top: 0;
         z-index: 10;
     }
+    
+    /* Table 1 mobile optimization - make all columns visible */
+    .section:first-of-type .scrollable {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .section:first-of-type table {
+        min-width: 100%;
+        font-size: 11px;
+    }
+    
+    .section:first-of-type th,
+    .section:first-of-type td {
+        padding: 4px 2px;
+        font-size: 11px;
+        white-space: nowrap;
+        min-width: 60px;
+    }
+    
+    /* Compress Table 1 further on very small screens */
+    @media (max-width: 375px) {
+        .section:first-of-type table {
+            font-size: 10px;
+        }
+        
+        .section:first-of-type th,
+        .section:first-of-type td {
+            padding: 3px 1px;
+            font-size: 10px;
+            min-width: 50px;
+        }
+    }
+    
+    /* iPhone SE specific optimization */
+    @media (max-width: 320px) {
+        .section:first-of-type table {
+            font-size: 9px;
+        }
+        
+        .section:first-of-type th,
+        .section:first-of-type td {
+            padding: 2px 1px;
+            font-size: 9px;
+            min-width: 45px;
+        }
+    }
 }
 
 /* Signal colors for table cells */
@@ -370,37 +417,50 @@ th {
         display: block;
     }
     
-    /* Mobile tooltip - prominent overlay covering top half of screen */
+    /* Mobile tooltip - full screen overlay with toggle button */
     .tooltip .tooltiptext {
         position: fixed;
         top: 0;
-        left: 10px;
-        right: 10px;
-        width: calc(100vw - 20px);
-        height: 50vh;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 100vh;
         background-color: rgba(0, 0, 0, 0.95);
         color: white;
         text-align: left;
-        padding: 20px;
-        border-radius: 0 0 15px 15px;
+        padding: 60px 20px 20px 20px;
+        border-radius: 0;
         font-size: 16px;
         z-index: 1000;
         overflow-y: auto;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        box-shadow: none;
         backdrop-filter: blur(5px);
         box-sizing: border-box;
     }
     
-    /* Add close hint at top of tooltip */
+    /* Overlay close button */
     .tooltip .tooltiptext::before {
-        content: 'Tap 💡 again to close • Swipe to scroll';
-        display: block;
-        font-size: 12px;
-        color: #ccc;
-        text-align: center;
-        margin-bottom: 15px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #555;
+        content: '✕ Close';
+        position: fixed;
+        top: 15px;
+        right: 20px;
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 10px 15px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        z-index: 1001;
+        transition: all 0.2s ease;
+    }
+    
+    .tooltip .tooltiptext::before:hover,
+    .tooltip .tooltiptext::before:active {
+        background-color: rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 255, 255, 0.5);
     }
     
     /* Hide hover effects on mobile to prevent sticky hover */
