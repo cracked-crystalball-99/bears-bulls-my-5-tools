@@ -24,7 +24,8 @@ $CoreFiles = @(
     "README.md",
     "styles-testing.css",
     "worker.js",
-    "fetch-gcf.js"
+    "fetch-gcf.js",
+    "custom-chart.js"
 )
 
 # Data files

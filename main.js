@@ -813,9 +813,8 @@ function updateVotesChart() {
         allToolsVotesChart.destroy();
     }
 
-    // Create a new chart instance with modern Chart.js configuration
-    allToolsVotesChart = new Chart(ctx, {
-        type: 'bar',
+    // Create a new chart instance with custom chart implementation
+    allToolsVotesChart = new CustomBarChart(ctx.canvas, {
         data: {
             labels: ['Buy Votes', 'Sell Votes'],
             datasets: [
@@ -823,35 +822,15 @@ function updateVotesChart() {
                     label: 'Votes',
                     data: [totalBuyVotes, totalSellVotes],
                     backgroundColor: [
-                        'rgba(40, 167, 69, 0.8)',   // Green for buy votes
+                        'rgba(40, 167, 69, 0.8)',   // Green for buy votes  
                         'rgba(220, 53, 69, 0.8)'    // Red for sell votes
                     ],
                     borderColor: [
                         'rgba(40, 167, 69, 1)',
                         'rgba(220, 53, 69, 1)'
-                    ],
-                    borderWidth: 1
+                    ]
                 }
             ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            aspectRatio: 2,
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top'
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        precision: 0
-                    }
-                }
-            }
         }
     });
 }
