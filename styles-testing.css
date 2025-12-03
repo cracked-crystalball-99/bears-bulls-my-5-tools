@@ -218,6 +218,35 @@ th {
         border-color: #ffa500;
     }
     
+    /* Chart navigation button for 'tr' buttons */
+    .tooltip.has-chart::after {
+        content: 'View Chart ↓';
+        position: absolute;
+        top: -15px;
+        left: -10px;
+        font-size: 11px;
+        color: #007acc;
+        background: rgba(240, 248, 255, 0.95);
+        padding: 6px 10px;
+        border-radius: 15px;
+        border: 1px solid #007acc;
+        pointer-events: auto;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        transition: all 0.2s ease;
+        white-space: nowrap;
+        z-index: 10;
+        font-weight: 500;
+    }
+    
+    .tooltip.has-chart::after:hover,
+    .tooltip.has-chart::after:active {
+        background: rgba(240, 248, 255, 1);
+        transform: scale(1.05);
+        box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+        color: #005588;
+    }
+    
     /* Ensure mobile tooltips are properly displayed */
     .tooltip.active .tooltiptext {
         visibility: visible !important;
@@ -226,7 +255,7 @@ th {
         display: block;
     }
     
-    /* Mobile tooltip positioning */
+    /* Mobile tooltip positioning - centered and constrained */
     .tooltip .tooltiptext {
         position: absolute;
         background-color: #333;
@@ -235,12 +264,24 @@ th {
         padding: 10px;
         border-radius: 6px;
         font-size: 14px;
-        max-width: 280px;
-        width: auto;
+        max-width: 260px;
+        width: 260px;
         left: 50%;
         transform: translateX(-50%);
         bottom: 120%;
         z-index: 999;
+        margin-left: -130px;
+        /* Ensure tooltip stays within screen bounds */
+        right: auto;
+    }
+    
+    /* Prevent tooltip from going off-screen on small devices */
+    @media (max-width: 320px) {
+        .tooltip .tooltiptext {
+            max-width: 240px;
+            width: 240px;
+            margin-left: -120px;
+        }
     }
     
     /* Hide hover effects on mobile to prevent sticky hover */
