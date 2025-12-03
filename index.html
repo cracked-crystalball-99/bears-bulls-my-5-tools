@@ -869,8 +869,10 @@
             const clickX = e.clientX - rect.left;
             const clickY = e.clientY - rect.top;
             
-            // Check if click is in the lightbulb area (positioned above and right of button)
-            const isLightbulbClick = clickX > rect.width - 95 && clickY < 10 && clickY > -20;
+            // Expanded click area for the lightbulb (positioned above and right of button)
+            // Allow clicks in the extended area above the button where lightbulb appears
+            const isLightbulbClick = (clickX > rect.width - 110 && clickY < 15 && clickY > -25) ||
+                                   (e.target.closest && e.target.textContent && e.target.textContent.includes('💡'));
             
             if (isLightbulbClick) {
               e.preventDefault();
@@ -890,6 +892,9 @@
               } else {
                 this.classList.add('active');
               }
+              
+              // Force a reflow to ensure the change takes effect
+              this.offsetHeight;
             }
             // If not lightbulb click, let the button handle it normally
           }

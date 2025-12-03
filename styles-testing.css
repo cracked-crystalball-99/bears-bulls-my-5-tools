@@ -218,6 +218,31 @@ th {
         border-color: #ffa500;
     }
     
+    /* Ensure mobile tooltips are properly displayed */
+    .tooltip.active .tooltiptext {
+        visibility: visible !important;
+        opacity: 1 !important;
+        z-index: 1000;
+        display: block;
+    }
+    
+    /* Mobile tooltip positioning */
+    .tooltip .tooltiptext {
+        position: absolute;
+        background-color: #333;
+        color: white;
+        text-align: left;
+        padding: 10px;
+        border-radius: 6px;
+        font-size: 14px;
+        max-width: 280px;
+        width: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 120%;
+        z-index: 999;
+    }
+    
     /* Hide hover effects on mobile to prevent sticky hover */
     .tooltip:hover .tooltiptext {
         visibility: hidden;
