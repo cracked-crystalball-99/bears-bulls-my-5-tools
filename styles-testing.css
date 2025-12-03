@@ -153,8 +153,14 @@ th {
     border-color: #555 transparent transparent transparent;
 }
 
-/* Show the tooltip text when hovering */
+/* Show the tooltip text when hovering (desktop) */
 .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Mobile-friendly tooltip - show when active class is added */
+.tooltip.active .tooltiptext {
     visibility: visible;
     opacity: 1;
 }
@@ -165,6 +171,28 @@ th {
         width: 200px;
         left: 50%;
         margin-left: -100px;
+    }
+    
+    /* Mobile tooltip enhancements */
+    .tooltip {
+        position: relative;
+    }
+    
+    /* Add visual indicator for tappable tooltips on mobile */
+    .tooltip::before {
+        content: "💡";
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 12px;
+        opacity: 0.7;
+        pointer-events: none;
+    }
+    
+    /* Hide hover effects on mobile to prevent sticky hover */
+    .tooltip:hover .tooltiptext {
+        visibility: hidden;
+        opacity: 0;
     }
 }
 

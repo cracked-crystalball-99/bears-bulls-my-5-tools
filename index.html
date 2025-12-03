@@ -856,6 +856,50 @@
 
   <script>
     // Privacy Management Functions
+    // Mobile-friendly tooltip system
+    document.addEventListener('DOMContentLoaded', function() {
+      const tooltips = document.querySelectorAll('.tooltip');
+      
+      tooltips.forEach(tooltip => {
+        tooltip.addEventListener('click', function(e) {
+          // On mobile devices or touch screens
+          if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            e.preventDefault();
+            
+            // Toggle active class for this tooltip
+            const wasActive = this.classList.contains('active');
+            
+            // Remove active class from all tooltips
+            tooltips.forEach(t => t.classList.remove('active'));
+            
+            // If this tooltip wasn't active, make it active
+            if (!wasActive) {
+              this.classList.add('active');
+            }
+          }
+        });
+        
+        // Also handle button clicks inside tooltip to execute the original function
+        const button = tooltip.querySelector('button');
+        if (button) {
+          button.addEventListener('click', function(e) {
+            // Allow the button click to proceed normally
+            // but remove tooltip active state after a delay
+            setTimeout(() => {
+              tooltip.classList.remove('active');
+            }, 100);
+          });
+        }
+      });
+      
+      // Close tooltips when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.tooltip')) {
+          tooltips.forEach(t => t.classList.remove('active'));
+        }
+      });
+    });
+
     // Initialize privacy system after a delay to avoid conflicts
     setTimeout(function() {
       const analyticsConsent = localStorage.getItem('analytics-consent');
