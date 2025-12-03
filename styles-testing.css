@@ -212,6 +212,45 @@ th {
         margin-bottom: 20px;
     }
     
+    /* Chart section back navigation */
+    .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    
+    .back-to-tools-btn {
+        background-color: #007acc;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    
+    .back-to-tools-btn:hover,
+    .back-to-tools-btn:active {
+        background-color: #005588;
+        transform: scale(1.05);
+        box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+    }
+    
+    @media (max-width: 600px) {
+        .chart-header {
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .back-to-tools-btn {
+            align-self: flex-start;
+        }
+    }
+    
     /* Active lightbulb when tooltip is shown */
     .tooltip.active::before {
         background: rgba(255, 255, 0, 0.3);
@@ -255,44 +294,36 @@ th {
         display: block;
     }
     
-    /* Mobile tooltip positioning - better centering */
+    /* Mobile tooltip - prominent overlay covering top half of screen */
     .tooltip .tooltiptext {
-        position: absolute;
-        background-color: #333;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100vw;
+        height: 50vh;
+        background-color: rgba(0, 0, 0, 0.95);
         color: white;
         text-align: left;
-        padding: 10px;
-        border-radius: 6px;
-        font-size: 14px;
-        max-width: 280px;
-        width: 280px;
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: 120%;
-        z-index: 999;
-        /* Better centering approach */
-        margin-left: 0;
-        right: auto;
+        padding: 20px;
+        border-radius: 0 0 15px 15px;
+        font-size: 16px;
+        z-index: 1000;
+        overflow-y: auto;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        backdrop-filter: blur(5px);
     }
     
-    /* Prevent tooltip from going off-screen */
-    @media (max-width: 320px) {
-        .tooltip .tooltiptext {
-            max-width: 260px;
-            width: 260px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-    }
-    
-    @media (max-width: 280px) {
-        .tooltip .tooltiptext {
-            max-width: 240px;
-            width: 240px;
-            left: 10px;
-            transform: none;
-            right: 10px;
-        }
+    /* Add close hint at top of tooltip */
+    .tooltip .tooltiptext::before {
+        content: 'Tap 💡 again to close • Swipe to scroll';
+        display: block;
+        font-size: 12px;
+        color: #ccc;
+        text-align: center;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #555;
     }
     
     /* Hide hover effects on mobile to prevent sticky hover */

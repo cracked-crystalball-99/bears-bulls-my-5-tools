@@ -772,7 +772,10 @@
 
     <!-- Chart Section for All Tools -->
     <div class="section" id="chartSection">
-        <h2>Tool #s 1-15 Votes Chart</h2>
+        <div class="chart-header">
+            <h2>Tool #s 1-15 Votes Chart</h2>
+            <button class="back-to-tools-btn" onclick="scrollToTools()">↑ Back to Tools</button>
+        </div>
         <canvas id="allToolsVotesChart" width="800" height="400"></canvas>
     </div>
    
@@ -947,6 +950,14 @@
         }
       });
     });
+    
+    // Back to tools navigation function
+    function scrollToTools() {
+      const toolsSection = document.querySelector('.section');
+      if (toolsSection) {
+        toolsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
 
     // Initialize privacy system after a delay to avoid conflicts
     setTimeout(function() {
