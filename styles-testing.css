@@ -436,63 +436,84 @@ th {
     @media (max-width: 768px) {
         .tooltip.active .tooltiptext {
             position: fixed !important;
-            top: 50% !important;
-            left: 50% !important;
-            transform: translate(-50%, -50%) !important;
+            top: 10% !important;
+            right: 5% !important;
+            transform: translateX(0) !important;
             visibility: visible !important;
             opacity: 1 !important;
             display: block !important;
             z-index: 1000 !important;
+            width: 90vw !important;
+            min-height: 200px !important;
         }
     }
     
-    /* Mobile tooltip - properly centered with better positioning */
+    /* Mobile tooltip - positioned on right side with larger size */
     .tooltip .tooltiptext {
         position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 85vw;
-        max-width: 400px;
-        max-height: 70vh;
+        top: 10%;
+        right: 5%;
+        width: 90vw;
+        max-width: 500px;
+        min-height: 200px;
+        max-height: 80vh;
         background-color: rgba(0, 0, 0, 0.95);
         color: white;
         text-align: left;
-        padding: 25px 20px;
+        padding: 30px 25px;
         border-radius: 15px;
-        font-size: 16px;
-        line-height: 1.5;
+        font-size: 17px;
+        line-height: 1.6;
         z-index: 1000;
         overflow-y: auto;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-        backdrop-filter: blur(10px);
+        box-shadow: 0 15px 50px rgba(0,0,0,0.7);
+        backdrop-filter: blur(15px);
         box-sizing: border-box;
-        border: 2px solid rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        transform: translateX(0);
     }
     
-    /* Center the tooltip content while keeping text left-aligned */
+    /* Improve tooltip content layout for better readability */
     .tooltip .tooltiptext h3,
     .tooltip .tooltiptext h4 {
         text-align: center;
-        margin: 0 0 15px 0;
+        margin: 0 0 20px 0;
+        font-size: 18px;
+        color: #fff;
     }
     
     .tooltip .tooltiptext p {
-        margin: 10px 0;
+        margin: 15px 0;
         text-align: left;
+        font-size: 17px;
+        line-height: 1.6;
+    }
+    
+    .tooltip .tooltiptext ul {
+        margin: 15px 0;
+        padding-left: 20px;
+    }
+    
+    .tooltip .tooltiptext li {
+        margin: 8px 0;
+        line-height: 1.5;
     }
     
     /* Close instruction at top of tooltip */
     .tooltip .tooltiptext::before {
         content: 'Tap 💡 again to close';
         display: block;
-        font-size: 12px;
-        color: #ccc;
+        font-size: 14px;
+        color: #bbb;
         text-align: center;
-        margin-bottom: 20px;
-        padding-bottom: 15px;
+        margin-bottom: 25px;
+        padding-bottom: 20px;
         border-bottom: 1px solid #555;
-        font-weight: 500;
+        font-weight: 600;
+        background: rgba(255, 255, 255, 0.05);
+        margin: -30px -25px 25px -25px;
+        padding: 15px 25px 20px 25px;
+        border-radius: 15px 15px 0 0;
     }
     
     /* Hide hover effects on mobile to prevent sticky hover */
