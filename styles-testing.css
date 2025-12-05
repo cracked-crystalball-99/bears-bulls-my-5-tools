@@ -437,40 +437,47 @@ th {
         .tooltip.active .tooltiptext {
             position: fixed !important;
             top: 10% !important;
-            right: 5% !important;
-            transform: translateX(0) !important;
+            right: 2% !important;
+            left: 2% !important;
+            width: auto !important;
+            max-width: none !important;
             visibility: visible !important;
             opacity: 1 !important;
             display: block !important;
             z-index: 1000 !important;
-            width: 90vw !important;
             min-height: 200px !important;
+            padding: 30px 15px !important;
+            word-wrap: break-word !important;
+            overflow-wrap: break-word !important;
         }
     }
     
-    /* Mobile tooltip - positioned on right side with larger size */
+    /* Mobile tooltip - positioned to prevent text cutoff */
     .tooltip .tooltiptext {
         position: fixed;
         top: 10%;
-        right: 5%;
-        width: 90vw;
-        max-width: 500px;
+        right: 2%;
+        left: 2%;
+        width: auto;
+        max-width: none;
         min-height: 200px;
         max-height: 80vh;
         background-color: rgba(0, 0, 0, 0.95);
         color: white;
         text-align: left;
-        padding: 30px 25px;
+        padding: 30px 20px;
         border-radius: 15px;
-        font-size: 17px;
+        font-size: 16px;
         line-height: 1.6;
         z-index: 1000;
         overflow-y: auto;
+        overflow-x: hidden;
         box-shadow: 0 15px 50px rgba(0,0,0,0.7);
         backdrop-filter: blur(15px);
         box-sizing: border-box;
         border: 2px solid rgba(255, 255, 255, 0.2);
-        transform: translateX(0);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
     
     /* Improve tooltip content layout for better readability */
@@ -511,9 +518,16 @@ th {
         border-bottom: 1px solid #555;
         font-weight: 600;
         background: rgba(255, 255, 255, 0.05);
-        margin: -30px -25px 25px -25px;
-        padding: 15px 25px 20px 25px;
+        margin: -30px -20px 25px -20px;
+        padding: 15px 20px 20px 20px;
         border-radius: 15px 15px 0 0;
+    }
+    
+    @media (max-width: 768px) {
+        .tooltip .tooltiptext::before {
+            margin: -30px -15px 25px -15px !important;
+            padding: 15px 15px 20px 15px !important;
+        }
     }
     
     /* Hide hover effects on mobile to prevent sticky hover */
