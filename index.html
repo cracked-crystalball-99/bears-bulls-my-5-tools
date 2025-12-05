@@ -900,10 +900,10 @@
             const clickX = e.clientX - rect.left;
             const clickY = e.clientY - rect.top;
             
-            // Expanded click area for the lightbulb (positioned above and right of button)
-            // Allow clicks in the extended area above the button where lightbulb appears
-            const isLightbulbClick = (clickX > rect.width - 110 && clickY < 15 && clickY > -25) ||
-                                   (e.target.closest && e.target.textContent && e.target.textContent.includes('💡'));
+            // Expanded click area for the lightbulb with better mobile detection
+            const isLightbulbClick = (clickX > rect.width - 120 && clickY < 30 && clickY > -35) ||
+                                   (e.target.textContent && e.target.textContent.includes('💡')) ||
+                                   (e.target.innerHTML && e.target.innerHTML.includes('💡'));
             
             if (isLightbulbClick) {
               e.preventDefault();
@@ -982,24 +982,22 @@
         }
       });
       
-      // Close tooltips when clicking outside or on close button
+      // Close tooltips when clicking outside
       document.addEventListener('click', function(e) {
-        // Check if clicked on close button (pseudo-element)
         const tooltip = e.target.closest('.tooltip');
-        if (tooltip && tooltip.classList.contains('active')) {
-          const rect = tooltip.querySelector('.tooltiptext').getBoundingClientRect();
-          const clickX = e.clientX;
-          const clickY = e.clientY;
-          
-          // Close button area (top right)
-          if (clickX > window.innerWidth - 100 && clickY < 50) {
-            tooltip.classList.remove('active');
-            return;
-          }
+        
+        // If clicking outside any tooltip, close all
+        if (!tooltip) {
+          tooltips.forEach(t => t.classList.remove('active'));
+          return;
         }
         
-        if (!e.target.closest('.tooltip')) {
-          tooltips.forEach(t => t.classList.remove('active'));
+        // If clicking on active tooltip background (not content), close it
+        if (tooltip && tooltip.classList.contains('active')) {
+          const tooltiptext = tooltip.querySelector('.tooltiptext');
+          if (tooltiptext && !tooltiptext.contains(e.target)) {
+            tooltip.classList.remove('active');
+          }
         }
       });
     });

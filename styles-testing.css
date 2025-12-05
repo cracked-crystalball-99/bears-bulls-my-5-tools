@@ -428,29 +428,58 @@ th {
     .tooltip.active .tooltiptext {
         visibility: visible !important;
         opacity: 1 !important;
-        z-index: 1000;
+        z-index: 1000 !important;
         display: block !important;
     }
     
-    /* Mobile tooltip - centered overlay */
+    /* Additional mobile tooltip visibility fixes */
+    @media (max-width: 768px) {
+        .tooltip.active .tooltiptext {
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            display: block !important;
+            z-index: 1000 !important;
+        }
+    }
+    
+    /* Mobile tooltip - properly centered with better positioning */
     .tooltip .tooltiptext {
         position: fixed;
-        top: 15%;
-        left: 5%;
-        right: 5%;
-        width: 90%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 85vw;
+        max-width: 400px;
         max-height: 70vh;
         background-color: rgba(0, 0, 0, 0.95);
         color: white;
         text-align: left;
-        padding: 20px;
+        padding: 25px 20px;
         border-radius: 15px;
         font-size: 16px;
+        line-height: 1.5;
         z-index: 1000;
         overflow-y: auto;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.6);
         backdrop-filter: blur(10px);
         box-sizing: border-box;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Center the tooltip content while keeping text left-aligned */
+    .tooltip .tooltiptext h3,
+    .tooltip .tooltiptext h4 {
+        text-align: center;
+        margin: 0 0 15px 0;
+    }
+    
+    .tooltip .tooltiptext p {
+        margin: 10px 0;
+        text-align: left;
     }
     
     /* Close instruction at top of tooltip */
@@ -460,9 +489,10 @@ th {
         font-size: 12px;
         color: #ccc;
         text-align: center;
-        margin-bottom: 15px;
-        padding-bottom: 10px;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
         border-bottom: 1px solid #555;
+        font-weight: 500;
     }
     
     /* Hide hover effects on mobile to prevent sticky hover */
