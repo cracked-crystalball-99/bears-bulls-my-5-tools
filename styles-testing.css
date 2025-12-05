@@ -449,6 +449,18 @@ th {
             padding: 30px 20px !important;
             word-wrap: break-word !important;
             overflow-wrap: break-word !important;
+            word-break: break-word !important;
+            white-space: pre-wrap !important;
+            hyphens: auto !important;
+        }
+        
+        /* Force all mobile tooltip content to wrap */
+        .tooltip.active .tooltiptext * {
+            word-wrap: break-word !important;
+            overflow-wrap: break-word !important;
+            word-break: break-word !important;
+            white-space: pre-wrap !important;
+            max-width: 100% !important;
         }
     }
     
@@ -478,6 +490,9 @@ th {
         border: 2px solid rgba(255, 255, 255, 0.2);
         word-wrap: break-word;
         overflow-wrap: break-word;
+        word-break: break-word;
+        white-space: pre-wrap;
+        hyphens: auto;
     }
     
     /* Improve tooltip content layout for better readability */
@@ -487,6 +502,9 @@ th {
         margin: 0 0 20px 0;
         font-size: 18px;
         color: #fff;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: break-word;
     }
     
     .tooltip .tooltiptext p {
@@ -494,16 +512,33 @@ th {
         text-align: left;
         font-size: 17px;
         line-height: 1.6;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        white-space: pre-wrap;
     }
     
     .tooltip .tooltiptext ul {
         margin: 15px 0;
         padding-left: 20px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
     
     .tooltip .tooltiptext li {
         margin: 8px 0;
         line-height: 1.5;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+    
+    /* Ensure all text content wraps properly */
+    .tooltip .tooltiptext * {
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
     }
     
     /* Close instruction at top of tooltip */
