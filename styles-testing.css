@@ -437,8 +437,8 @@ th {
         .tooltip.active .tooltiptext {
             position: fixed !important;
             top: 10% !important;
-            right: 2% !important;
-            left: 2% !important;
+            right: 5% !important;
+            left: 5% !important;
             width: auto !important;
             max-width: none !important;
             visibility: visible !important;
@@ -446,18 +446,18 @@ th {
             display: block !important;
             z-index: 1000 !important;
             min-height: 200px !important;
-            padding: 30px 15px !important;
+            padding: 30px 20px !important;
             word-wrap: break-word !important;
             overflow-wrap: break-word !important;
         }
     }
     
-    /* Mobile tooltip - positioned to prevent text cutoff */
+    /* Mobile tooltip - positioned to prevent text cutoff on both sides */
     .tooltip .tooltiptext {
         position: fixed;
         top: 10%;
-        right: 2%;
-        left: 2%;
+        right: 5%;
+        left: 5%;
         width: auto;
         max-width: none;
         min-height: 200px;
@@ -465,7 +465,7 @@ th {
         background-color: rgba(0, 0, 0, 0.95);
         color: white;
         text-align: left;
-        padding: 30px 20px;
+        padding: 30px 25px;
         border-radius: 15px;
         font-size: 16px;
         line-height: 1.6;
@@ -518,15 +518,15 @@ th {
         border-bottom: 1px solid #555;
         font-weight: 600;
         background: rgba(255, 255, 255, 0.05);
-        margin: -30px -20px 25px -20px;
-        padding: 15px 20px 20px 20px;
+        margin: -30px -25px 25px -25px;
+        padding: 15px 25px 20px 25px;
         border-radius: 15px 15px 0 0;
     }
     
     @media (max-width: 768px) {
         .tooltip .tooltiptext::before {
-            margin: -30px -15px 25px -15px !important;
-            padding: 15px 15px 20px 15px !important;
+            margin: -30px -20px 25px -20px !important;
+            padding: 15px 20px 20px 20px !important;
         }
     }
     
