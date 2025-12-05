@@ -432,7 +432,7 @@ th {
         display: block !important;
     }
     
-    /* Additional mobile tooltip visibility fixes */
+    /* Mobile clean block formatting */
     @media (max-width: 768px) {
         .tooltip.active .tooltiptext {
             position: fixed !important;
@@ -447,24 +447,34 @@ th {
             z-index: 1000 !important;
             min-height: 200px !important;
             padding: 30px 20px !important;
+            padding-left: 20px !important;
             word-wrap: break-word !important;
             overflow-wrap: break-word !important;
             word-break: break-word !important;
-            white-space: pre-wrap !important;
-            hyphens: auto !important;
+            white-space: normal !important;
+            text-indent: 0 !important;
+            margin-left: 0 !important;
         }
         
-        /* Force all mobile tooltip content to wrap */
+        /* Force clean block formatting on mobile */
         .tooltip.active .tooltiptext * {
             word-wrap: break-word !important;
             overflow-wrap: break-word !important;
             word-break: break-word !important;
-            white-space: pre-wrap !important;
+            white-space: normal !important;
             max-width: 100% !important;
+            text-indent: 0 !important;
+            margin-left: 0 !important;
+            padding-left: 0 !important;
+        }
+        
+        /* Maintain list structure on mobile */
+        .tooltip.active .tooltiptext ul {
+            padding-left: 20px !important;
         }
     }
     
-    /* Mobile tooltip - positioned to prevent text cutoff on both sides */
+    /* Mobile tooltip - clean block formatting like top line */
     .tooltip .tooltiptext {
         position: fixed;
         top: 10%;
@@ -491,54 +501,78 @@ th {
         word-wrap: break-word;
         overflow-wrap: break-word;
         word-break: break-word;
-        white-space: pre-wrap;
-        hyphens: auto;
+        white-space: normal;
+        text-indent: 0;
+        margin-left: 0;
+        padding-left: 25px;
     }
     
-    /* Improve tooltip content layout for better readability */
+    /* Clean block formatting for all text elements */
     .tooltip .tooltiptext h3,
     .tooltip .tooltiptext h4 {
         text-align: center;
         margin: 0 0 20px 0;
+        padding: 0;
         font-size: 18px;
         color: #fff;
         word-wrap: break-word;
         overflow-wrap: break-word;
         word-break: break-word;
+        text-indent: 0;
+        margin-left: 0;
     }
     
     .tooltip .tooltiptext p {
         margin: 15px 0;
+        padding: 0;
         text-align: left;
         font-size: 17px;
         line-height: 1.6;
         word-wrap: break-word;
         overflow-wrap: break-word;
         word-break: break-word;
-        white-space: pre-wrap;
+        white-space: normal;
+        text-indent: 0;
+        margin-left: 0;
+        padding-left: 0;
     }
     
     .tooltip .tooltiptext ul {
-        margin: 15px 0;
+        margin: 15px 0 15px 0;
+        padding: 0;
         padding-left: 20px;
         word-wrap: break-word;
         overflow-wrap: break-word;
+        text-indent: 0;
+        margin-left: 0;
     }
     
     .tooltip .tooltiptext li {
         margin: 8px 0;
+        padding: 0;
         line-height: 1.5;
         word-wrap: break-word;
         overflow-wrap: break-word;
         word-break: break-word;
+        text-indent: 0;
+        margin-left: 0;
+        padding-left: 0;
     }
     
-    /* Ensure all text content wraps properly */
+    /* Force clean block formatting on all elements */
     .tooltip .tooltiptext * {
         word-wrap: break-word !important;
         overflow-wrap: break-word !important;
         max-width: 100% !important;
         box-sizing: border-box !important;
+        text-indent: 0 !important;
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+    }
+    
+    /* Special handling for lists to maintain structure */
+    .tooltip .tooltiptext ul {
+        padding-left: 20px !important;
     }
     
     /* Close instruction at top of tooltip */
