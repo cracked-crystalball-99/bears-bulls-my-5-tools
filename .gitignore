@@ -4,6 +4,9 @@ sync-to-xampp.ps1
 sync-to-xampp.bat
 quick-sync.ps1
 quick-sync.bat
+test-sync.ps1
+*.ps1
+!custom-chart.js
 
 # Local development files
 *.local.*
