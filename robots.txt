@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 User-agent: *
 Allow: /
 
@@ -13,4 +14,21 @@ Allow: /*.js
 # Disallow: /private/
 
 # Crawl delay (optional, in seconds)
+=======
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://percentagesenvy.com/sitemap.xml
+
+# Allow crawling of main content
+Allow: /index.html
+Allow: /*.css
+Allow: /*.js
+
+# Optional: Disallow any sensitive directories (none for this project)
+# Disallow: /private/
+
+# Crawl delay (optional, in seconds)
+>>>>>>> 65445e1e40a6059882622dfeaf1ea18a3f9d7d30
 Crawl-delay: 1
