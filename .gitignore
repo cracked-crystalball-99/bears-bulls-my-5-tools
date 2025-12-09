@@ -5,6 +5,7 @@ sync-to-xampp.bat
 quick-sync.ps1
 quick-sync.bat
 test-sync.ps1
+deploy-safe.ps1
 *.ps1
 !custom-chart.js
 

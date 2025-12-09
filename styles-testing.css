@@ -812,3 +812,53 @@ th {
         padding: 6px 12px;
     }
 }
+
+/* Chess Engine Cross-Promotion Styles */
+#chessPromotion {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#chessPromotion:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(52, 152, 219, 0.3);
+}
+
+#chessPromotion a {
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+#chessPromotion a:hover {
+    background-color: #2980b9 !important;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+}
+
+/* Mobile responsiveness for chess promotion */
+@media (max-width: 768px) {
+    #chessPromotion {
+        margin: 20px 10px;
+        padding: 20px 15px;
+    }
+    
+    #chessPromotion h3 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+    }
+    
+    #chessPromotion p {
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 15px;
+    }
+    
+    #chessPromotion div {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    #chessPromotion a {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
