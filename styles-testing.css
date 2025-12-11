@@ -1026,6 +1026,24 @@ th {
     box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
 }
 
+/* iPad responsiveness for chess promotion */
+@media (min-width: 769px) and (max-width: 1023px) {
+    #chessPromotion {
+        margin: 20px auto !important;
+        width: 100%;
+        max-width: 900px;
+    }
+}
+
+/* Desktop responsiveness for chess promotion */
+@media (min-width: 1024px) {
+    #chessPromotion {
+        margin: 20px auto !important;
+        width: 100%;
+        max-width: 900px;
+    }
+}
+
 /* Mobile responsiveness for chess promotion */
 @media (max-width: 768px) {
     #chessPromotion {
