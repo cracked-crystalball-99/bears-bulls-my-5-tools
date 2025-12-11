@@ -325,7 +325,7 @@ th {
     
     /* Visually separated lightbulb with invitation text */
     .tooltip::before {
-        content: "Tap 💡 for info";
+        content: "Tap 💡 info";
         position: absolute;
         top: -15px;
         right: -10px;
