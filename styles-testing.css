@@ -8,23 +8,36 @@ body {
     align-items: center;
     background-color: #f8f9fa; /* Light Grey background */
     color: #343a40; /* Dark Grey text */
+    min-height: 100vh;
 }
 
-/* Main container with normal scrolling */
+/* Main container with improved centering for all devices */
 .main-container {
     width: 100%;
+    max-width: 1200px; /* Maximum width for larger screens */
     margin: 0 auto;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 h1 {
     margin-top: 20px;
     color: #6f42c1; /* Purple */
+    text-align: center;
+}
+
+h2 {
+    color: #6f42c1; /* Purple */
+    text-align: center;
+    margin: 20px 0;
 }
 
 form {
     margin-bottom: 20px;
     text-align: center;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .container {
@@ -32,12 +45,36 @@ form {
     flex-direction: column;
     align-items: center;
     width: 100%;
+    max-width: 100%;
 }
 
 .section {
     margin-bottom: 20px;
-    width: 90%;
-    max-width: 800px;
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Responsive adjustments for better centering */
+@media (min-width: 768px) {
+    .main-container {
+        padding: 30px 40px;
+    }
+    
+    .section {
+        width: 95%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .main-container {
+        padding: 40px 60px;
+    }
+    
+    .section {
+        width: 90%;
+    }
 }
 
 .section button {
@@ -61,11 +98,15 @@ form {
     max-height: 400px;
     overflow-y: auto;
     position: relative;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
+    margin: 0 auto;
 }
 
 th, td {
@@ -626,14 +667,18 @@ th {
     background-color: #f0f0f0;
 }
 
-/* Date Picker and Ticker Search Styling */
+/* Date Picker and Ticker Search Styling - Improved Centering */
 .date-picker, .ticker-search {
     margin-bottom: 20px;
-    width: 90%;
+    width: 100%;
     max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
 .date-picker label, .ticker-search label {
