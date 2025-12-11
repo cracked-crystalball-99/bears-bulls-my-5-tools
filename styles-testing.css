@@ -301,19 +301,12 @@ th {
 /* Responsive tooltips - Mobile and iPad */
 @media (max-width: 1023px) {
     .tooltip .tooltiptext {
-        /* Full-screen modal overlay for mobile/iPad */
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        margin: 0;
-        background-color: rgba(0, 0, 0, 0.95);
-        color: #fff;
-        text-align: left;
-        border-radius: 0;
-        padding: 60px 20px 20px 20px;
-        z-index: 9999;
+        width: 90vw;
+        max-width: 400px;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-left: 0;
+        max-height: 70vh;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
     }
@@ -357,28 +350,6 @@ th {
         visibility: visible !important;
         opacity: 1 !important;
         display: block !important;
-    }
-    
-    /* Close button for tooltip - appears in fixed position */
-    .tooltip.active .tooltiptext::before {
-        content: "✕ Close";
-        position: fixed;
-        top: 15px;
-        right: 15px;
-        background: rgba(255, 255, 255, 0.2);
-        color: white;
-        padding: 10px 20px;
-        border-radius: 20px;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        z-index: 10000;
-        border: 2px solid rgba(255, 255, 255, 0.5);
-    }
-    
-    /* Remove arrow for mobile/iPad modal */
-    .tooltip .tooltiptext::after {
-        display: none;
     }
     
     /* Add margin to tooltip container for lightbulb space */
