@@ -45,7 +45,6 @@ form {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 100%;
 }
 
 .section {
@@ -60,10 +59,6 @@ form {
 @media (min-width: 768px) {
     .main-container {
         padding: 30px 40px;
-    }
-    
-    .section {
-        width: 95%;
     }
 }
 
@@ -303,15 +298,27 @@ th {
     opacity: 1;
 }
 
-/* Responsive tooltips */
-@media (max-width: 600px) {
+/* Responsive tooltips - Mobile and iPad */
+@media (max-width: 1023px) {
     .tooltip .tooltiptext {
-        width: 200px;
-        left: 50%;
-        margin-left: -100px;
+        /* Full-screen modal overlay for mobile/iPad */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        background-color: rgba(0, 0, 0, 0.95);
+        color: #fff;
+        text-align: left;
+        border-radius: 0;
+        padding: 60px 20px 20px 20px;
+        z-index: 9999;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
-    /* Mobile tooltip enhancements */
+    /* Mobile/iPad tooltip enhancements */
     .tooltip {
         position: relative;
     }
@@ -350,6 +357,28 @@ th {
         visibility: visible !important;
         opacity: 1 !important;
         display: block !important;
+    }
+    
+    /* Close button for tooltip - appears in fixed position */
+    .tooltip.active .tooltiptext::before {
+        content: "✕ Close";
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 10000;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+    
+    /* Remove arrow for mobile/iPad modal */
+    .tooltip .tooltiptext::after {
+        display: none;
     }
     
     /* Add margin to tooltip container for lightbulb space */
@@ -875,9 +904,9 @@ th {
     }
 }
 
-/* Chart navigation for Desktop and iPad (not mobile) */
-@media (min-width: 601px) {
-    /* Visually separated lightbulb with invitation text - Desktop/iPad */
+/* Chart navigation for Desktop only (iPad uses mobile tap behavior) */
+@media (min-width: 1024px) {
+    /* Visually separated lightbulb with invitation text - Desktop */
     .tooltip::before {
         content: "Hover 💡 for info";
         position: absolute;
