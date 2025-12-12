@@ -298,8 +298,8 @@ th {
     opacity: 1;
 }
 
-/* Responsive tooltips - Mobile and iPad */
-@media (max-width: 1023px) {
+/* Responsive tooltips - Mobile and iPad (including iPad Pro) */
+@media (max-width: 1366px) {
     .tooltip .tooltiptext {
         width: 90vw;
         max-width: 400px;
@@ -880,8 +880,8 @@ th {
     }
 }
 
-/* Chart navigation for Desktop only (iPad uses mobile tap behavior) */
-@media (min-width: 1024px) {
+/* Chart navigation for Desktop only */
+@media (min-width: 1367px) {
     /* Visually separated lightbulb with invitation text - Desktop */
     .tooltip::before {
         content: "Hover 💡 for info";
