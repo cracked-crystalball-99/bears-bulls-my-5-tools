@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    
     <title>Technical Analysis Tool</title>
     <meta name="description" content="Free Technical Analysis Tool. Upload your stock or crypto CSV data to calculate ADX, RSI, MACD, and generate powerful trading signals." />
-    <link rel="stylesheet" href="styles-testing.css?v=3.0">
-    <script src="custom-chart.js"></script>
+    <link rel="stylesheet" href="styles-testing.css?v=3.1">
+    <script src="custom-chart.js?v=3.1"></script>
+    <script src="synthetic-data-generator.js?v=3.1"></script>
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
     
   <!-- Google Analytics (Privacy-Compliant) -->
@@ -59,6 +62,23 @@
 <body>
     <div class="main-container">
         <h1>Technical Analysis Tool</h1>
+
+    <!-- Demo Mode Banner -->
+    <div id="demoBanner" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: 2px solid #5a67d8; border-radius: 12px; padding: 20px; margin: 20px auto; text-align: center; color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap;">
+            <span style="font-size: 32px;">🎯</span>
+            <div style="text-align: left;">
+                <h3 style="margin: 0 0 8px 0; color: #fff; font-size: 18px;">📊 Demo Mode: FANG + MAN Stocks</h3>
+                <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #e6e6ff;">
+                    Try all 15 technical analysis tools with <strong>realistic synthetic data</strong> for 7 major tech stocks:<br>
+                    <strong>FANG</strong> (Meta, Apple, Netflix, Google) + <strong>MAN</strong> (Microsoft, Amazon, NVIDIA)
+                </p>
+            </div>
+        </div>
+        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.3); font-size: 13px; color: #e6e6ff;">
+            💡 <em>Educational data spanning 15 years • Perfect for learning technical analysis • No API costs</em>
+        </div>
+    </div>
 
     <!-- Cross-Promotion: Chess Engine -->
     <div class="section" id="chessPromotion" style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); border: 2px solid #3498db; border-radius: 12px; padding: 25px; margin: 20px auto; text-align: center;">
@@ -823,8 +843,8 @@
         <canvas id="allToolsVotesChart" width="800" height="400"></canvas>
     </div>
    
-    <script src="main.js?v=2.0"></script>
-    <script src="fetch-gcf.js"></script>
+    <script src="main.js?v=3.2"></script>
+    <script src="fetch-gcf.js?v=3.2"></script>
 
     <script>
         // Set the minimum date for the date picker inputs

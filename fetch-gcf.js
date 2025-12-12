@@ -1,262 +1,36 @@
+/**
+ * Demo Mode Ticker Search and Data Fetching
+ * FANG + MAN stocks only (7 major tech stocks)
+ */
+
+// Demo mode - Only FANG + MAN tickers available
 const tickers = [
-    // Top 100 US Stocks
+    // FANG
+    { symbol: 'META', name: 'Meta Platforms Inc.' },
     { symbol: 'AAPL', name: 'Apple Inc.' },
+    { symbol: 'NFLX', name: 'Netflix Inc.' },
+    { symbol: 'GOOGL', name: 'Alphabet Inc.' },
+    // MAN
     { symbol: 'MSFT', name: 'Microsoft Corporation' },
-    { symbol: 'AMZN', name: 'Amazon.com, Inc.' },
-    { symbol: 'GOOGL', name: 'Alphabet Inc. (Class A)' },
-    { symbol: 'FB', name: 'Meta Platforms, Inc.' },
-    { symbol: 'TSLA', name: 'Tesla, Inc.' },
-    { symbol: 'BRK.B', name: 'Berkshire Hathaway Inc. (Class B)' },
-    { symbol: 'NVDA', name: 'NVIDIA Corporation' },
-    { symbol: 'JPM', name: 'JPMorgan Chase & Co.' },
-    { symbol: 'JNJ', name: 'Johnson & Johnson' },
-    { symbol: 'V', name: 'Visa Inc.' },
-    { symbol: 'PG', name: 'Procter & Gamble Co.' },
-    { symbol: 'UNH', name: 'UnitedHealth Group Incorporated' },
-    { symbol: 'HD', name: 'The Home Depot, Inc.' },
-    { symbol: 'MA', name: 'Mastercard Incorporated' },
-    { symbol: 'DIS', name: 'The Walt Disney Company' },
-    { symbol: 'PYPL', name: 'PayPal Holdings, Inc.' },
-    { symbol: 'BAC', name: 'Bank of America Corporation' },
-    { symbol: 'VZ', name: 'Verizon Communications Inc.' },
-    { symbol: 'NFLX', name: 'Netflix, Inc.' },
-    { symbol: 'KO', name: 'The Coca-Cola Company' },
-    { symbol: 'PEP', name: 'PepsiCo, Inc.' },
-    { symbol: 'MRK', name: 'Merck & Co., Inc.' },
-    { symbol: 'T', name: 'AT&T Inc.' },
-    { symbol: 'XOM', name: 'Exxon Mobil Corporation' },
-    { symbol: 'CSCO', name: 'Cisco Systems, Inc.' },
-    { symbol: 'ABT', name: 'Abbott Laboratories' },
-    { symbol: 'CMCSA', name: 'Comcast Corporation' },
-    { symbol: 'CVX', name: 'Chevron Corporation' },
-    { symbol: 'NKE', name: 'NIKE, Inc.' },
-    { symbol: 'PFE', name: 'Pfizer Inc.' },
-    { symbol: 'WMT', name: 'Walmart Inc.' },
-    { symbol: 'INTC', name: 'Intel Corporation' },
-    { symbol: 'ORCL', name: 'Oracle Corporation' },
-    { symbol: 'ADBE', name: 'Adobe Inc.' },
-    { symbol: 'CRM', name: 'Salesforce.com, Inc.' },
-    { symbol: 'MCD', name: 'McDonald\'s Corporation' },
-    { symbol: 'MDT', name: 'Medtronic plc' },
-    { symbol: 'HON', name: 'Honeywell International Inc.' },
-    { symbol: 'IBM', name: 'International Business Machines Corporation' },
-    { symbol: 'LLY', name: 'Eli Lilly and Company' },
-    { symbol: 'MMM', name: '3M Company' },
-    { symbol: 'TXN', name: 'Texas Instruments Incorporated' },
-    { symbol: 'UNP', name: 'Union Pacific Corporation' },
-    { symbol: 'QCOM', name: 'QUALCOMM Incorporated' },
-    { symbol: 'BMY', name: 'Bristol-Myers Squibb Company' },
-    { symbol: 'AMGN', name: 'Amgen Inc.' },
-    { symbol: 'SBUX', name: 'Starbucks Corporation' },
-    { symbol: 'CAT', name: 'Caterpillar Inc.' },
-    { symbol: 'GS', name: 'The Goldman Sachs Group, Inc.' },
-    { symbol: 'RTX', name: 'Raytheon Technologies Corporation' },
-    { symbol: 'DHR', name: 'Danaher Corporation' },
-    { symbol: 'SPGI', name: 'S&P Global Inc.' },
-    { symbol: 'TMO', name: 'Thermo Fisher Scientific Inc.' },
-    { symbol: 'GILD', name: 'Gilead Sciences, Inc.' },
-    { symbol: 'FIS', name: 'Fidelity National Information Services, Inc.' },
-    { symbol: 'ADP', name: 'Automatic Data Processing, Inc.' },
-    { symbol: 'MO', name: 'Altria Group, Inc.' },
-    { symbol: 'BKNG', name: 'Booking Holdings Inc.' },
-    { symbol: 'ISRG', name: 'Intuitive Surgical, Inc.' },
-    { symbol: 'CI', name: 'Cigna Corporation' },
-    { symbol: 'ZTS', name: 'Zoetis Inc.' },
-    { symbol: 'MMC', name: 'Marsh & McLennan Companies, Inc.' },
-    { symbol: 'CHTR', name: 'Charter Communications, Inc.' },
-    { symbol: 'EL', name: 'The Estée Lauder Companies Inc.' },
-    { symbol: 'SYK', name: 'Stryker Corporation' },
-    { symbol: 'BSX', name: 'Boston Scientific Corporation' },
-    { symbol: 'ILMN', name: 'Illumina, Inc.' },
-    { symbol: 'ATVI', name: 'Activision Blizzard, Inc.' },
-    { symbol: 'LRCX', name: 'Lam Research Corporation' },
-    { symbol: 'REGN', name: 'Regeneron Pharmaceuticals, Inc.' },
-    { symbol: 'EW', name: 'Edwards Lifesciences Corporation' },
-    { symbol: 'CDNS', name: 'Cadence Design Systems, Inc.' },
-    { symbol: 'SNPS', name: 'Synopsys, Inc.' },
-    { symbol: 'KLAC', name: 'KLA Corporation' },
-    { symbol: 'MCO', name: 'Moody\'s Corporation' },
-    { symbol: 'VRTX', name: 'Vertex Pharmaceuticals Incorporated' },
-    { symbol: 'BIIB', name: 'Biogen Inc.' },
-    { symbol: 'ANTM', name: 'Anthem, Inc.' },
-    { symbol: 'AON', name: 'Aon plc' },
-    { symbol: 'FISV', name: 'Fiserv, Inc.' },
-    { symbol: 'AEP', name: 'American Electric Power Company, Inc.' },
-    { symbol: 'ECL', name: 'Ecolab Inc.' },
-    { symbol: 'ROP', name: 'Roper Technologies, Inc.' },
-    { symbol: 'TRV', name: 'The Travelers Companies, Inc.' },
-    { symbol: 'AIG', name: 'American International Group, Inc.' },
-    { symbol: 'APD', name: 'Air Products and Chemicals, Inc.' },
-    { symbol: 'ADM', name: 'Archer-Daniels-Midland Company' },
-    { symbol: 'SYY', name: 'Sysco Corporation' },
-    { symbol: 'D', name: 'Dominion Energy, Inc.' },
-    { symbol: 'ED', name: 'Consolidated Edison, Inc.' },
-    { symbol: 'PEG', name: 'Public Service Enterprise Group Incorporated' },
-    { symbol: 'XEL', name: 'Xcel Energy Inc.' },
-    { symbol: 'WEC', name: 'WEC Energy Group, Inc.' },
-    { symbol: 'ES', name: 'Eversource Energy' },
-    { symbol: 'CMS', name: 'CMS Energy Corporation' },
-    { symbol: 'DTE', name: 'DTE Energy Company' },
-    { symbol: 'AEE', name: 'Ameren Corporation' },
-    { symbol: 'NI', name: 'NiSource Inc.' },
-    { symbol: 'PPL', name: 'PPL Corporation' },
-    // Top 100 Australian Stocks
-    { symbol: 'BHP', name: 'BHP Group Limited' },
-    { symbol: 'CBA', name: 'Commonwealth Bank of Australia' },
-    { symbol: 'CSL', name: 'CSL Limited' },
-    { symbol: 'WBC', name: 'Westpac Banking Corporation' },
-    { symbol: 'NAB', name: 'National Australia Bank Limited' },
-    { symbol: 'ANZ', name: 'Australia and New Zealand Banking Group Limited' },
-    { symbol: 'WES', name: 'Wesfarmers Limited' },
-    { symbol: 'MQG', name: 'Macquarie Group Limited' },
-    { symbol: 'WOW', name: 'Woolworths Group Limited' },
-    { symbol: 'TLS', name: 'Telstra Corporation Limited' },
-    { symbol: 'RIO', name: 'Rio Tinto Limited' },
-    { symbol: 'FMG', name: 'Fortescue Metals Group Ltd' },
-    { symbol: 'WPL', name: 'Woodside Petroleum Ltd' },
-    { symbol: 'GMG', name: 'Goodman Group' },
-    { symbol: 'TCL', name: 'Transurban Group' },
-    { symbol: 'AGL', name: 'AGL Energy Limited' },
-    { symbol: 'QAN', name: 'Qantas Airways Limited' },
-    { symbol: 'ORG', name: 'Origin Energy Limited' },
-    { symbol: 'S32', name: 'South32 Limited' },
-    { symbol: 'STO', name: 'Santos Limited' },
-    { symbol: 'APA', name: 'APA Group' },
-    { symbol: 'SCG', name: 'Scentre Group' },
-    { symbol: 'ALD', name: 'Ampol Limited' },
-    { symbol: 'BXB', name: 'Brambles Limited' },
-    { symbol: 'COH', name: 'Cochlear Limited' },
-    { symbol: 'CPU', name: 'Computershare Limited' },
-    { symbol: 'DXS', name: 'Dexus' },
-    { symbol: 'GMG', name: 'Goodman Group' },
-    { symbol: 'IAG', name: 'Insurance Australia Group Limited' },
-    { symbol: 'JHX', name: 'James Hardie Industries plc' },
-    { symbol: 'LLC', name: 'Lendlease Group' },
-    { symbol: 'MFG', name: 'Magellan Financial Group Ltd' },
-    { symbol: 'MGR', name: 'Mirvac Group' },
-    { symbol: 'NCM', name: 'Newcrest Mining Limited' },
-    { symbol: 'QBE', name: 'QBE Insurance Group Limited' },
-    { symbol: 'RHC', name: 'Ramsay Health Care Limited' },
-    { symbol: 'RMD', name: 'ResMed Inc.' },
-    { symbol: 'SGP', name: 'Stockland' },
-    { symbol: 'SHL', name: 'Sonic Healthcare Limited' },
-    { symbol: 'SUL', name: 'Super Retail Group Limited' },
-    { symbol: 'SYD', name: 'Sydney Airport' },
-    { symbol: 'TAH', name: 'Tabcorp Holdings Limited' },
-    { symbol: 'TCL', name: 'Transurban Group' },
-    { symbol: 'TLS', name: 'Telstra Corporation Limited' },
-    { symbol: 'TWE', name: 'Treasury Wine Estates Limited' },
-    { symbol: 'VCX', name: 'Vicinity Centres' },
-    { symbol: 'WES', name: 'Wesfarmers Limited' },
-    { symbol: 'WPL', name: 'Woodside Petroleum Ltd' },
-    { symbol: 'WOW', name: 'Woolworths Group Limited' },
-    { symbol: 'AMC', name: 'Amcor plc' },
-    { symbol: 'AMP', name: 'AMP Limited' },
-    { symbol: 'ASX', name: 'ASX Limited' },
-    { symbol: 'BLD', name: 'Boral Limited' },
-    { symbol: 'BPT', name: 'Beach Energy Limited' },
-    { symbol: 'BSL', name: 'BlueScope Steel Limited' },
-    { symbol: 'CAR', name: 'carsales.com Ltd' },
-    { symbol: 'CCL', name: 'Coca-Cola Amatil Limited' },
-    { symbol: 'CHC', name: 'Charter Hall Group' },
-    { symbol: 'CIM', name: 'CIMIC Group Limited' },
-    { symbol: 'CWY', name: 'Cleanaway Waste Management Limited' },
-    { symbol: 'DHG', name: 'Domain Holdings Australia Limited' },
-    { symbol: 'EVN', name: 'Evolution Mining Limited' },
-    { symbol: 'FLT', name: 'Flight Centre Travel Group Limited' },
-    { symbol: 'GEM', name: 'G8 Education Limited' },
-    { symbol: 'GNC', name: 'GrainCorp Limited' },
-    { symbol: 'GPT', name: 'GPT Group' },
-    { symbol: 'HLS', name: 'Healius Limited' },
-    { symbol: 'IEL', name: 'IDP Education Limited' },
-    { symbol: 'IGO', name: 'IGO Limited' },
-    { symbol: 'ILU', name: 'Iluka Resources Limited' },
-    { symbol: 'INA', name: 'Ingenia Communities Group' },
-    { symbol: 'IPH', name: 'IPH Limited' },
-    { symbol: 'JHG', name: 'Janus Henderson Group plc' },
-    { symbol: 'LNK', name: 'Link Administration Holdings Limited' },
-    { symbol: 'MFG', name: 'Magellan Financial Group Ltd' },
-    { symbol: 'MGR', name: 'Mirvac Group' },
-    { symbol: 'MIN', name: 'Mineral Resources Limited' },
-    { symbol: 'MPL', name: 'Medibank Private Limited' },
-    { symbol: 'NCM', name: 'Newcrest Mining Limited' },
-    { symbol: 'NWS', name: 'News Corporation' },
-    { symbol: 'NST', name: 'Northern Star Resources Ltd' },
-    { symbol: 'ORA', name: 'Orora Limited' },
-    { symbol: 'OZL', name: 'OZ Minerals Limited' },
-    { symbol: 'PDL', name: 'Pendal Group Limited' },
-    { symbol: 'PMV', name: 'Premier Investments Limited' },
-    { symbol: 'QAN', name: 'Qantas Airways Limited' },
-    { symbol: 'QBE', name: 'QBE Insurance Group Limited' },
-    { symbol: 'RHC', name: 'Ramsay Health Care Limited' },
-    { symbol: 'RMD', name: 'ResMed Inc.' },
-    { symbol: 'S32', name: 'South32 Limited' },
-    { symbol: 'SDF', name: 'Steadfast Group Limited' },
-    { symbol: 'SEK', name: 'SEEK Limited' },
-    { symbol: 'SFR', name: 'Sandfire Resources NL' },
-    { symbol: 'SHL', name: 'Sonic Healthcare Limited' },
-    { symbol: 'SKI', name: 'Spark Infrastructure Group' },
-    { symbol: 'SLC', name: 'Superloop Limited' },
-    { symbol: 'SPK', name: 'Spark New Zealand Limited' },
-    { symbol: 'SUL', name: 'Super Retail Group Limited' },
-    { symbol: 'SUN', name: 'Suncorp Group Limited' },
-    { symbol: 'SYD', name: 'Sydney Airport' },
-    // Top 100 Cryptocurrencies
-    { symbol: 'BTC', name: 'Bitcoin' },
-    { symbol: 'ETH', name: 'Ethereum' },
-    { symbol: 'USDT', name: 'Tether' },
-    { symbol: 'BNB', name: 'Binance Coin' },
-    { symbol: 'ADA', name: 'Cardano' },
-    { symbol: 'XRP', name: 'Ripple' },
-    { symbol: 'SOL', name: 'Solana' },
-    { symbol: 'DOT', name: 'Polkadot' },
-    { symbol: 'DOGE', name: 'Dogecoin' },
-    { symbol: 'USDC', name: 'USD Coin' },
-    { symbol: 'LUNA', name: 'Terra' },
-    { symbol: 'UNI', name: 'Uniswap' },
-    { symbol: 'AVAX', name: 'Avalanche' },
-    { symbol: 'LINK', name: 'Chainlink' },
-    { symbol: 'LTC', name: 'Litecoin' },
-    { symbol: 'BCH', name: 'Bitcoin Cash' },
-    { symbol: 'ALGO', name: 'Algorand' },
-    { symbol: 'XLM', name: 'Stellar' },
-    { symbol: 'MATIC', name: 'Polygon' },
-    { symbol: 'VET', name: 'VeChain' },
-    { symbol: 'ICP', name: 'Internet Computer' },
-    { symbol: 'FIL', name: 'Filecoin' },
-    { symbol: 'TRX', name: 'TRON' },
-    { symbol: 'THETA', name: 'Theta' },
-    { symbol: 'FTT', name: 'FTX Token' },
-    { symbol: 'EGLD', name: 'Elrond' },
-    { symbol: 'HBAR', name: 'Hedera' },
-    { symbol: 'AXS', name: 'Axie Infinity' },
-    { symbol: 'XMR', name: 'Monero' },
-    { symbol: 'EOS', name: 'EOS' },
-    { symbol: 'KSM', name: 'Kusama' },
-    { symbol: 'AAVE', name: 'Aave' },
-    { symbol: 'ATOM', name: 'Cosmos' },
-    { symbol: 'MKR', name: 'Maker' },
-    { symbol: 'CAKE', name: 'PancakeSwap' },
-    { symbol: 'KLAY', name: 'Klaytn' },
-    { symbol: 'NEAR', name: 'NEAR Protocol' },
-    { symbol: 'BSV', name: 'Bitcoin SV' },
-    { symbol: 'LEO', name: 'UNUS SED LEO' },
-    { symbol: 'RUNE', name: 'THORChain' },
-    { symbol: 'MIOTA', name: 'IOTA' },
-    { symbol: 'QNT', name: 'Quant' },
-    { symbol: 'ZEC', name: 'Zcash' },
-    { symbol: 'ENJ', name: 'Enjin Coin' }
-    // Add the rest of the tickers here...
+    { symbol: 'AMZN', name: 'Amazon.com Inc.' },
+    { symbol: 'NVDA', name: 'NVIDIA Corporation' }
 ];
 
+// Ticker search autocomplete
 document.getElementById('ticker-input').addEventListener('input', (event) => {
     const suggestionsContainer = document.getElementById('suggestions');
     const query = event.target.value.toLowerCase();
+    
+    // Filter tickers based on search query
     const suggestions = tickers.filter(ticker => 
         ticker.symbol.toLowerCase().includes(query) || 
         ticker.name.toLowerCase().includes(query)
     );
+    
+    // Clear previous suggestions
     suggestionsContainer.innerHTML = '';
+    
+    // Display suggestions
     suggestions.forEach(suggestion => {
         const div = document.createElement('div');
         div.className = 'suggestion';
@@ -269,34 +43,108 @@ document.getElementById('ticker-input').addEventListener('input', (event) => {
     });
 });
 
+// Fetch data button click handler
 document.getElementById('fetch-data-button').addEventListener('click', () => {
-    const ticker = document.getElementById('ticker-input').value;
+    const ticker = document.getElementById('ticker-input').value.toUpperCase();
     const startDate = document.getElementById('start-date').value;
     const endDate = document.getElementById('end-date').value;
+    
+    // Validate ticker
+    if (!window.SyntheticDataGenerator.isTickerAvailable(ticker)) {
+        alert(`Sorry, "${ticker}" is not available in demo mode. Please select one of the FANG + MAN stocks:\n\n` +
+              `📊 FANG: META, AAPL, NFLX, GOOGL\n` +
+              `💼 MAN: MSFT, AMZN, NVDA`);
+        return;
+    }
+    
+    // Validate dates
+    if (!startDate || !endDate) {
+        alert('Please select both start and end dates.');
+        return;
+    }
+    
+    // Fetch and display data
     fetchDataAndUpdateTable(ticker, startDate, endDate);
 });
 
-async function fetchDataAndUpdateTable(ticker, startDate, endDate) {
-    const response = await fetch(`https://your-cloud-function-url?ticker=${ticker}&start=${startDate}&end=${endDate}`);
-    const data = await response.json();
-
-    // Process data and update table
-    const table = document.getElementById('csvTable');
-    table.innerHTML = ''; // Clear existing table
-
-    // Create table header
-    const headerRow = table.insertRow();
-    Object.keys(data[0]).forEach(key => {
-        const headerCell = headerRow.insertCell();
-        headerCell.textContent = key;
-    });
-
-    // Create table rows with data
-    data.forEach(row => {
-        const dataRow = table.insertRow();
-        Object.values(row).forEach(value => {
-            const dataCell = dataRow.insertCell();
-            dataCell.textContent = value;
-        });
-    });
+function fetchDataAndUpdateTable(ticker, startDate, endDate) {
+    try {
+        // Security: Validate ticker input
+        const sanitizedTicker = ticker.trim().toUpperCase().replace(/[^A-Z]/g, '');
+        if (sanitizedTicker.length > 10 || sanitizedTicker.length < 1) {
+            alert('⚠️ Invalid ticker format. Please use 1-10 uppercase letters only.');
+            return;
+        }
+        
+        // Security: Validate date format (YYYY-MM-DD)
+        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+        if (!dateRegex.test(startDate) || !dateRegex.test(endDate)) {
+            alert('⚠️ Invalid date format. Please use YYYY-MM-DD format.');
+            return;
+        }
+        
+        // Show loading indicator
+        const tableBody = document.getElementById('csvTableBody');
+        const tableHead = document.getElementById('csvTableHead');
+        tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 20px;">⏳ Generating synthetic data...</td></tr>';
+        
+        // Generate synthetic data
+        setTimeout(() => {
+            const data = window.SyntheticDataGenerator.generateSyntheticData(sanitizedTicker, startDate, endDate);
+            
+            // Update table header
+            const headers = ['Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume'];
+            tableHead.innerHTML = '';
+            const headerRow = tableHead.insertRow();
+            headers.forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                headerRow.appendChild(th);
+            });
+            
+            // Update table body
+            tableBody.innerHTML = '';
+            data.forEach(row => {
+                const tr = tableBody.insertRow();
+                headers.forEach(header => {
+                    const td = tr.insertCell();
+                    // Security: Sanitize output to prevent XSS
+                    const textNode = document.createTextNode(row[header]);
+                    td.appendChild(textNode);
+                });
+            });
+            
+            // Show success message
+            const stockName = window.SyntheticDataGenerator.STOCK_CONFIGS[sanitizedTicker].name;
+            alert(`✅ Successfully loaded ${data.length} days of data for ${stockName} (${sanitizedTicker})\n\n` +
+                  `📅 Date Range: ${data[0].Date} to ${data[data.length-1].Date}\n\n` +
+                  `💡 Demo Mode: This is realistic synthetic data for educational purposes.\n` +
+                  `Now you can use all 15 technical analysis tools!`);
+            
+            // Scroll to table
+            document.getElementById('csvTable').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+        }, 500); // Small delay for UX
+        
+    } catch (error) {
+        console.error('Error generating synthetic data:', error);
+        alert('⚠️ Error generating data. Please try again or select a different ticker.');
+    }
 }
+
+// Initialize date picker with default range on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const dateRange = window.SyntheticDataGenerator.getDefaultDateRange();
+    document.getElementById('start-date').value = dateRange.startDate;
+    document.getElementById('end-date').value = dateRange.endDate;
+    
+    // Set minimum date (15 years ago)
+    const minDate = dateRange.startDate;
+    document.getElementById('start-date').setAttribute('min', minDate);
+    document.getElementById('end-date').setAttribute('min', minDate);
+    
+    // Show welcome message with available tickers
+    console.log('🎯 Demo Mode Active - FANG + MAN Stocks Available:');
+    console.log('📊 FANG: META, AAPL, NFLX, GOOGL');
+    console.log('💼 MAN: MSFT, AMZN, NVDA');
+});
