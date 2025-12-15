@@ -13,22 +13,29 @@
     <script src="synthetic-data-generator.js?v=3.1"></script>
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
     
-  <!-- Google Analytics (Privacy-Compliant) -->
+  <!-- Google Analytics (Privacy-Compliant) - Trading Analysis Tool -->
   <script>
-    // Privacy-first analytics with opt-out mechanism
+    // Trading Analytics - Isolated namespace to prevent cross-property tracking
     (function() {
       'use strict';
       
-      // Check for user consent
-      const analyticsConsent = localStorage.getItem('analytics-consent');
+      // Initialize Google Analytics with isolated dataLayer
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      
+      // Use repo-specific localStorage key to prevent conflicts
+      const CONSENT_KEY = 'trading-analytics-consent';
+      const analyticsConsent = localStorage.getItem(CONSENT_KEY);
       
       if (analyticsConsent === 'granted') {
-        // User has consented - load GA
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        // User has consented - load GA with privacy settings
         gtag('js', new Date());
         gtag('config', 'G-4Z2MRXK9NR', {
-          'cookie_flags': 'max-age=86400;secure;samesite=none'
+          'anonymize_ip': true,
+          'allow_google_signals': false,
+          'allow_ad_personalization_signals': false,
+          'cookie_domain': 'auto',
+          'cookie_prefix': 'trading'
         });
         
         // Load GA script
@@ -36,23 +43,6 @@
         script.async = true;
         script.src = 'https://www.googletagmanager.com/gtag/js?id=G-4Z2MRXK9NR';
         document.head.appendChild(script);
-        
-        // Store consent timestamp
-        localStorage.setItem('analytics-consent', 'granted');
-      }
-      
-      // Privacy protection function
-      window.clearAnalytics = function() {
-        localStorage.setItem('analytics-consent', 'denied');
-        // Clear any existing GA cookies
-        document.cookie = '_ga=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        document.cookie = '_ga_4Z2MRXK9NR=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        document.cookie = '_gid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-      };
-      
-      // Lightweight privacy system versioning
-      if (!localStorage.getItem('privacy-system-version')) {
-        localStorage.setItem('privacy-system-version', '2.0');
       }
     })();
   </script>
@@ -920,7 +910,131 @@
     </div>
 
   <script>
-    // Privacy Management Functions
+    // Trading Analytics Privacy Management (Isolated Namespace)
+    (function() {
+      'use strict';
+      
+      const CONSENT_KEY = 'trading-analytics-consent';
+      const GA_MEASUREMENT_ID = 'G-4Z2MRXK9NR';
+      
+      // Cookie clearing utility
+      function clearAnalyticsCookies() {
+        const cookiesToClear = [
+          '_ga',
+          '_ga_' + GA_MEASUREMENT_ID.replace('G-', ''),
+          '_gid',
+          '_gat'
+        ];
+        
+        cookiesToClear.forEach(cookieName => {
+          // Clear with various domain configurations
+          document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+          document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + location.hostname + ';';
+          if (location.hostname.includes('.')) {
+            const baseDomain = '.' + location.hostname.split('.').slice(-2).join('.');
+            document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + baseDomain + ';';
+          }
+        });
+      }
+      
+      // Global functions for UI buttons (exposed to window)
+      window.enableAnalytics = function() {
+        try {
+          localStorage.setItem(CONSENT_KEY, 'granted');
+          updatePrivacyStatus();
+          location.reload();
+        } catch (e) {
+          console.error('Failed to enable analytics:', e);
+        }
+      };
+      
+      window.disableAnalytics = function() {
+        try {
+          localStorage.setItem(CONSENT_KEY, 'denied');
+          clearAnalyticsCookies();
+          updatePrivacyStatus();
+          const banner = document.getElementById('privacyBanner');
+          if (banner) banner.classList.remove('show');
+        } catch (e) {
+          console.error('Failed to disable analytics:', e);
+        }
+      };
+      
+      window.acceptAnalytics = function() {
+        try {
+          localStorage.setItem(CONSENT_KEY, 'granted');
+          location.reload();
+        } catch (e) {
+          console.error('Failed to accept analytics:', e);
+        }
+      };
+      
+      window.declineAnalytics = function() {
+        try {
+          localStorage.setItem(CONSENT_KEY, 'denied');
+          clearAnalyticsCookies();
+          const banner = document.getElementById('privacyBanner');
+          if (banner) banner.classList.remove('show');
+        } catch (e) {
+          console.error('Failed to decline analytics:', e);
+        }
+      };
+      
+      window.showPrivacyInfo = function() {
+        const consent = localStorage.getItem(CONSENT_KEY);
+        alert('Privacy Information:\n\n' +
+              '• We use Google Analytics to understand how the trading analysis tool is used\n' +
+              '• All data is anonymized and aggregated\n' +
+              '• No personal information is collected or stored\n' +
+              '• You can enable/disable analytics anytime\n' +
+              '• The tool works fully without analytics\n' +
+              '• This tool uses isolated tracking (trading-analytics-consent)\n\n' +
+              'Current status: ' + (consent || 'Not set') + '\n\n' +
+              'Measurement ID: ' + GA_MEASUREMENT_ID);
+      };
+      
+      window.resetPrivacySettings = function() {
+        localStorage.removeItem(CONSENT_KEY);
+        clearAnalyticsCookies();
+        location.reload();
+      };
+      
+      function updatePrivacyStatus() {
+        const consent = localStorage.getItem(CONSENT_KEY);
+        const statusEl = document.getElementById('privacyStatus');
+        
+        if (!statusEl) return;
+        
+        if (consent === 'granted') {
+          statusEl.textContent = '✅ Analytics enabled - helping improve the tool';
+          statusEl.style.color = '#28a745';
+        } else if (consent === 'denied') {
+          statusEl.textContent = '❌ Analytics disabled - your privacy is protected';
+          statusEl.style.color = '#dc3545';
+        } else {
+          statusEl.textContent = '⚪ No preference set - click to choose';
+          statusEl.style.color = '#6c757d';
+        }
+      }
+      
+      // Initialize privacy system
+      setTimeout(function() {
+        const analyticsConsent = localStorage.getItem(CONSENT_KEY);
+        
+        if (!analyticsConsent) {
+          setTimeout(() => {
+            const privacyBanner = document.getElementById('privacyBanner');
+            if (privacyBanner) {
+              privacyBanner.classList.add('show');
+            }
+          }, 2000);
+        }
+        
+        updatePrivacyStatus();
+      }, 1500);
+      
+    })();
+    
     // Mobile-friendly tooltip system with decoupled lightbulb control
     document.addEventListener('DOMContentLoaded', function() {
       const tooltips = document.querySelectorAll('.tooltip');
@@ -1101,87 +1215,7 @@
       }
     }
 
-    // Initialize privacy system after a delay to avoid conflicts
-    setTimeout(function() {
-      const analyticsConsent = localStorage.getItem('analytics-consent');
-      
-      if (!analyticsConsent) {
-        // Show banner if no consent decision made
-        setTimeout(() => {
-          const privacyBanner = document.getElementById('privacyBanner');
-          if (privacyBanner) {
-            privacyBanner.classList.add('show');
-          }
-        }, 2000);
-      }
-      
-      // Update privacy settings status
-      updatePrivacyStatus();
-    }, 1500);
-
-    function acceptAnalytics() {
-      localStorage.setItem('analytics-consent', 'granted');
-      location.reload(); // Reload to activate analytics
-      document.getElementById('privacyBanner').classList.remove('show');
-    }
-
-    function declineAnalytics() {
-      window.clearAnalytics();
-      document.getElementById('privacyBanner').classList.remove('show');
-    }
-
-    function updatePrivacyStatus() {
-      const consent = localStorage.getItem('analytics-consent');
-      const statusEl = document.getElementById('privacyStatus');
-      
-      if (!statusEl) return;
-      
-      if (consent === 'granted') {
-        statusEl.textContent = '✅ Analytics enabled - helping improve the tool';
-        statusEl.style.color = '#28a745';
-      } else if (consent === 'denied') {
-        statusEl.textContent = '❌ Analytics disabled - your privacy is protected';
-        statusEl.style.color = '#dc3545';
-      } else {
-        statusEl.textContent = '⚪ No preference set - click to choose';
-        statusEl.style.color = '#6c757d';
-      }
-    }
-
-    function enableAnalytics() {
-      localStorage.setItem('analytics-consent', 'granted');
-      updatePrivacyStatus();
-      location.reload(); // Reload to activate analytics
-      const banner = document.getElementById('privacyBanner');
-      if (banner) banner.classList.remove('show');
-    }
-
-    function disableAnalytics() {
-      localStorage.setItem('analytics-consent', 'denied');
-      window.clearAnalytics();
-      updatePrivacyStatus();
-      const banner = document.getElementById('privacyBanner');
-      if (banner) banner.classList.remove('show');
-    }
-
-    function showPrivacyInfo() {
-      const consent = localStorage.getItem('analytics-consent');
-      alert('Privacy Information:\n\n' +
-            '• We use Google Analytics to understand how the trading analysis tool is used\n' +
-            '• All data is anonymized and aggregated\n' +
-            '• No personal information is collected or stored\n' +
-            '• Cookies expire after 24 hours\n' +
-            '• You can enable/disable analytics anytime\n' +
-            '• The tool works fully without analytics\n\n' +
-            'Current status: ' + (consent || 'Not set') + '\n\n' +
-            'Use the Enable/Disable buttons in Privacy Settings to change your choice anytime.');
-    }
-
-    // Helper function to reset privacy settings (for debugging)
-    function resetPrivacySettings() {
-      localStorage.removeItem('analytics-consent');
-      location.reload();
-    }
+    // Privacy functions are now handled in the isolated IIFE above
   </script>
 
   <!-- Privacy Consent Banner -->
