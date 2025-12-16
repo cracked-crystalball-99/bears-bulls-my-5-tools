@@ -28,20 +28,27 @@
       const GA_MEASUREMENT_ID = 'G-4Z2MRXK9NR';
       const OTHER_MEASUREMENT_ID = 'DY4TBEES4D';  // Chess engine ID to block
       
-      // AGGRESSIVE cookie cleanup - remove ALL non-trading cookies
+      // ULTRA-AGGRESSIVE cookie cleanup - remove ALL non-trading cookies AND wrong measurement ID
       function clearAllForeignCookies() {
         const allCookies = document.cookie.split(';');
-        const domains = ['.github.io', '.cracked-crystalball-99.github.io', 'cracked-crystalball-99.github.io', location.hostname];
-        const paths = ['/', '/chess-engine/', '/bears-bulls-my-5-tools/'];
+        const domains = ['.github.io', '.cracked-crystalball-99.github.io', 'cracked-crystalball-99.github.io', location.hostname, ''];
+        const paths = ['/', '/chess-engine/', '/bears-bulls-my-5-tools/', '/trading-analysis-master/', ''];
         
         allCookies.forEach(cookie => {
           const cookieName = cookie.split('=')[0].trim();
-          // Remove ANY cookie that's not trading-prefixed
-          if (!cookieName.startsWith('trading_') && (cookieName.startsWith('_ga') || cookieName.startsWith('chess_'))) {
+          // Remove ANY cookie that:
+          // 1. Contains the wrong measurement ID (DY4TBEES4D)
+          // 2. Has chess_ prefix
+          // 3. Is a GA cookie without trading_ prefix
+          const isWrongMeasurementId = cookieName.includes(OTHER_MEASUREMENT_ID);
+          const isChessCookie = cookieName.startsWith('chess_');
+          const isUnprefixedGA = cookieName.startsWith('_ga') && !cookieName.startsWith('trading_');
+          
+          if (isWrongMeasurementId || isChessCookie || isUnprefixedGA) {
             domains.forEach(domain => {
               paths.forEach(path => {
-                document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + path + '; domain=' + domain;
-                document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + path;
+                const domainStr = domain ? '; domain=' + domain : '';
+                document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + path + domainStr;
               });
             });
           }
@@ -86,8 +93,7 @@
         
         console.log('📥 Attempting to load GA script:', script.src);
         
-        script.onload = function() {
-          console.log('✅ GA Script loaded successfully');
+          setTimeout(clearAllForeignCookies, 1000);
           
           // Check cookies after 2 seconds
           setTimeout(() => {
@@ -132,17 +138,17 @@
         document.head.appendChild(script);
         console.log('📋 Script element added to DOM');
         
-        // Continuous cleanup every 2 seconds
-        setInterval(clearAllForeignCookies, 2000);
+        // AGGRESSIVE continuous cleanup every 500ms to catch GA cookie creation
+        setInterval(clearAllForeignCookies, 500);
         
-        console.log('✅ Trading Analytics: Loaded with isolated tracking (G-4Z2MRXK9NR)');
-      } else {
-        console.log('⏸️ Trading Analytics: Waiting for consent');
-      }
-    })();
-  </script>
-</head>
-<body>
+        // Also run burst cleanup after script loads
+        script.onload = function() {
+          console.log('✅ GA Script loaded successfully');
+          
+          // Burst cleanup to catch immediate cookie creation
+          setTimeout(clearAllForeignCookies, 100);
+          setTimeout(clearAllForeignCookies, 500);
+          setTimeout(clearAllForeignCookies, 1000);
     <div class="main-container">
         <h1>Technical Analysis Tool</h1>
 
