@@ -19,9 +19,9 @@
     (function() {
       'use strict';
       
-      // Initialize Google Analytics with ISOLATED dataLayer
-      window.tradingDataLayer = window.tradingDataLayer || [];
-      function gtag(){window.tradingDataLayer.push(arguments);}
+      // Initialize Google Analytics with standard dataLayer (isolation via cookie_prefix)
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
       
       // Use repo-specific localStorage key to prevent conflicts
       const CONSENT_KEY = 'trading-analytics-consent';
@@ -79,10 +79,10 @@
         
         console.log('  GA Config sent with prefix: trading');
         
-        // Load GA script with custom dataLayer name
+        // Load GA script with STANDARD URL (no custom dataLayer parameter)
         const script = document.createElement('script');
         script.async = true;
-        script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID + '&l=tradingDataLayer';
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID;
         
         console.log('📥 Attempting to load GA script:', script.src);
         
