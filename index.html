@@ -26,35 +26,44 @@
       // Use repo-specific localStorage key to prevent conflicts
       const CONSENT_KEY = 'trading-analytics-consent';
       const GA_MEASUREMENT_ID = 'G-4Z2MRXK9NR';
-      const analyticsConsent = localStorage.getItem(CONSENT_KEY);
+      const OTHER_MEASUREMENT_ID = 'DY4TBEES4D';  // Chess engine ID to block
       
-      // Clear any chess-engine cookies that might interfere
-      function clearCrossSiteCookies() {
+      // AGGRESSIVE cookie cleanup - remove ALL non-trading cookies
+      function clearAllForeignCookies() {
         const allCookies = document.cookie.split(';');
+        const domains = ['.github.io', '.cracked-crystalball-99.github.io', 'cracked-crystalball-99.github.io', location.hostname];
+        const paths = ['/', '/chess-engine/', '/bears-bulls-my-5-tools/'];
+        
         allCookies.forEach(cookie => {
           const cookieName = cookie.split('=')[0].trim();
-          // Remove chess-prefixed cookies
-          if (cookieName.startsWith('chess_ga') || cookieName.startsWith('_ga_DY4TBEES4D')) {
-            document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-            document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.github.io;';
+          // Remove ANY cookie that's not trading-prefixed
+          if (!cookieName.startsWith('trading_') && (cookieName.startsWith('_ga') || cookieName.startsWith('chess_'))) {
+            domains.forEach(domain => {
+              paths.forEach(path => {
+                document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + path + '; domain=' + domain;
+                document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + path;
+              });
+            });
           }
         });
       }
       
+      // Run cleanup immediately
+      clearAllForeignCookies();
+      
+      const analyticsConsent = localStorage.getItem(CONSENT_KEY);
+      
       if (analyticsConsent === 'granted') {
-        // Clear conflicting cookies first
-        clearCrossSiteCookies();
-        
         // User has consented - load GA with privacy settings
         gtag('js', new Date());
         gtag('config', GA_MEASUREMENT_ID, {
           'anonymize_ip': true,
           'allow_google_signals': false,
           'allow_ad_personalization_signals': false,
-          'cookie_domain': 'auto',  // CHANGED: Allow cookies with auto domain
+          'cookie_domain': location.hostname.includes('percentagesenvy') ? 'percentagesenvy.com' : 'cracked-crystalball-99.github.io',
           'cookie_prefix': 'trading',
-          'cookie_path': '/trading-analysis-master/',  // NEW: Path-specific cookies
-          'cookie_flags': 'SameSite=Strict;Secure',  // NEW: Strict isolation
+          'cookie_path': '/',
+          'cookie_flags': 'SameSite=Lax;Secure',
           'send_page_view': true
         });
         
@@ -63,6 +72,9 @@
         script.async = true;
         script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID + '&l=tradingDataLayer';
         document.head.appendChild(script);
+        
+        // Continuous cleanup every 2 seconds
+        setInterval(clearAllForeignCookies, 2000);
         
         console.log('✅ Trading Analytics: Loaded with isolated tracking (G-4Z2MRXK9NR)');
       } else {
