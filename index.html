@@ -19,30 +19,54 @@
     (function() {
       'use strict';
       
-      // Initialize Google Analytics with isolated dataLayer
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      // Initialize Google Analytics with ISOLATED dataLayer
+      window.tradingDataLayer = window.tradingDataLayer || [];
+      function gtag(){window.tradingDataLayer.push(arguments);}
       
       // Use repo-specific localStorage key to prevent conflicts
       const CONSENT_KEY = 'trading-analytics-consent';
+      const GA_MEASUREMENT_ID = 'G-4Z2MRXK9NR';
       const analyticsConsent = localStorage.getItem(CONSENT_KEY);
       
+      // Clear any chess-engine cookies that might interfere
+      function clearCrossSiteCookies() {
+        const allCookies = document.cookie.split(';');
+        allCookies.forEach(cookie => {
+          const cookieName = cookie.split('=')[0].trim();
+          // Remove chess-prefixed cookies
+          if (cookieName.startsWith('chess_ga') || cookieName.startsWith('_ga_DY4TBEES4D')) {
+            document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.github.io;';
+          }
+        });
+      }
+      
       if (analyticsConsent === 'granted') {
+        // Clear conflicting cookies first
+        clearCrossSiteCookies();
+        
         // User has consented - load GA with privacy settings
         gtag('js', new Date());
-        gtag('config', 'G-4Z2MRXK9NR', {
+        gtag('config', GA_MEASUREMENT_ID, {
           'anonymize_ip': true,
           'allow_google_signals': false,
           'allow_ad_personalization_signals': false,
-          'cookie_domain': 'auto',
-          'cookie_prefix': 'trading'
+          'cookie_domain': 'none',  // CHANGED: Prevent cross-subdomain tracking
+          'cookie_prefix': 'trading',
+          'cookie_path': '/trading-analysis-master/',  // NEW: Path-specific cookies
+          'cookie_flags': 'SameSite=Strict;Secure',  // NEW: Strict isolation
+          'send_page_view': true
         });
         
-        // Load GA script
+        // Load GA script with custom dataLayer name
         const script = document.createElement('script');
         script.async = true;
-        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-4Z2MRXK9NR';
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID + '&l=tradingDataLayer';
         document.head.appendChild(script);
+        
+        console.log('✅ Trading Analytics: Loaded with isolated tracking (G-4Z2MRXK9NR)');
+      } else {
+        console.log('⏸️ Trading Analytics: Waiting for consent');
       }
     })();
   </script>
