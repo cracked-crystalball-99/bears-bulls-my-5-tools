@@ -83,6 +83,9 @@
         const script = document.createElement('script');
         script.async = true;
         script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID + '&l=tradingDataLayer';
+        
+        console.log('📥 Attempting to load GA script:', script.src);
+        
         script.onload = function() {
           console.log('✅ GA Script loaded successfully');
           
@@ -109,10 +112,25 @@
             console.log('    _ga_4Z2MRXK9NR:', hasGaMeasurement ? '✓' : '✗ MISSING');
           }, 2000);
         };
-        script.onerror = function() {
+        
+        script.onerror = function(error) {
           console.error('❌ GA Script failed to load');
+          console.error('   URL:', script.src);
+          console.error('   This could be caused by:');
+          console.error('     • Ad blocker (uBlock, AdBlock, Privacy Badger)');
+          console.error('     • Browser privacy settings blocking analytics');
+          console.error('     • Network/firewall blocking Google domains');
+          console.error('     • Third-party cookie blocking');
+          console.error('   Error:', error);
+          
+          // Check if we can reach Google at all
+          fetch('https://www.google.com/favicon.ico', {mode: 'no-cors'})
+            .then(() => console.log('   ✓ Can reach google.com'))
+            .catch(() => console.error('   ✗ Cannot reach google.com - network issue'));
         };
+        
         document.head.appendChild(script);
+        console.log('📋 Script element added to DOM');
         
         // Continuous cleanup every 2 seconds
         setInterval(clearAllForeignCookies, 2000);
