@@ -54,23 +54,64 @@
       const analyticsConsent = localStorage.getItem(CONSENT_KEY);
       
       if (analyticsConsent === 'granted') {
+        // DEBUG: Log environment details
+        console.log('🔍 GA Debug Info:');
+        console.log('  Protocol:', location.protocol);
+        console.log('  Hostname:', location.hostname);
+        console.log('  Full URL:', location.href);
+        console.log('  Consent:', analyticsConsent);
+        
+        const cookieDomain = location.hostname.includes('percentagesenvy') ? 'percentagesenvy.com' : 'cracked-crystalball-99.github.io';
+        console.log('  Cookie Domain:', cookieDomain);
+        
         // User has consented - load GA with privacy settings
         gtag('js', new Date());
         gtag('config', GA_MEASUREMENT_ID, {
           'anonymize_ip': true,
           'allow_google_signals': false,
           'allow_ad_personalization_signals': false,
-          'cookie_domain': location.hostname.includes('percentagesenvy') ? 'percentagesenvy.com' : 'cracked-crystalball-99.github.io',
+          'cookie_domain': cookieDomain,
           'cookie_prefix': 'trading',
           'cookie_path': '/',
           'cookie_flags': 'SameSite=Lax;Secure',
           'send_page_view': true
         });
         
+        console.log('  GA Config sent with prefix: trading');
+        
         // Load GA script with custom dataLayer name
         const script = document.createElement('script');
         script.async = true;
         script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID + '&l=tradingDataLayer';
+        script.onload = function() {
+          console.log('✅ GA Script loaded successfully');
+          
+          // Check cookies after 2 seconds
+          setTimeout(() => {
+            const allCookies = document.cookie.split(';').map(c => c.trim());
+            console.log('🍪 Current Cookies:');
+            if (allCookies.length === 0 || (allCookies.length === 1 && allCookies[0] === '')) {
+              console.warn('⚠️ NO COOKIES FOUND! This is the problem.');
+            } else {
+              allCookies.forEach(cookie => {
+                const name = cookie.split('=')[0];
+                if (name.includes('ga') || name.includes('trading')) {
+                  console.log('  ✓', cookie.substring(0, 50) + '...');
+                }
+              });
+            }
+            
+            // Check for specific expected cookies
+            const hasTradingGa = document.cookie.includes('trading_ga');
+            const hasGaMeasurement = document.cookie.includes('_ga_4Z2MRXK9NR');
+            console.log('  Expected cookies present:');
+            console.log('    trading_ga:', hasTradingGa ? '✓' : '✗ MISSING');
+            console.log('    _ga_4Z2MRXK9NR:', hasGaMeasurement ? '✓' : '✗ MISSING');
+          }, 2000);
+        };
+        script.onerror = function() {
+          console.error('❌ GA Script failed to load');
+        };
         document.head.appendChild(script);
         
         // Continuous cleanup every 2 seconds
