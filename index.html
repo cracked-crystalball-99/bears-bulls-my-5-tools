@@ -93,6 +93,28 @@
         
         console.log('📥 Attempting to load GA script:', script.src);
         
+        script.onerror = function(error) {
+          console.error('❌ GA Script failed to load');
+          console.error('   URL:', script.src);
+          console.error('   This could be caused by:');
+          console.error('     • Ad blocker (uBlock, AdBlock, Privacy Badger)');
+          console.error('     • Browser privacy settings blocking analytics');
+          console.error('     • Network/firewall blocking Google domains');
+          console.error('     • Third-party cookie blocking');
+          console.error('   Error:', error);
+          
+          // Check if we can reach Google at all
+          fetch('https://www.google.com/favicon.ico', {mode: 'no-cors'})
+            .then(() => console.log('   ✓ Can reach google.com'))
+            .catch(() => console.error('   ✗ Cannot reach google.com - network issue'));
+        };
+        
+        script.onload = function() {
+          console.log('✅ GA Script loaded successfully');
+          
+          // Burst cleanup to catch immediate cookie creation
+          setTimeout(clearAllForeignCookies, 100);
+          setTimeout(clearAllForeignCookies, 500);
           setTimeout(clearAllForeignCookies, 1000);
           
           // Check cookies after 2 seconds
@@ -119,36 +141,18 @@
           }, 2000);
         };
         
-        script.onerror = function(error) {
-          console.error('❌ GA Script failed to load');
-          console.error('   URL:', script.src);
-          console.error('   This could be caused by:');
-          console.error('     • Ad blocker (uBlock, AdBlock, Privacy Badger)');
-          console.error('     • Browser privacy settings blocking analytics');
-          console.error('     • Network/firewall blocking Google domains');
-          console.error('     • Third-party cookie blocking');
-          console.error('   Error:', error);
-          
-          // Check if we can reach Google at all
-          fetch('https://www.google.com/favicon.ico', {mode: 'no-cors'})
-            .then(() => console.log('   ✓ Can reach google.com'))
-            .catch(() => console.error('   ✗ Cannot reach google.com - network issue'));
-        };
-        
         document.head.appendChild(script);
         console.log('📋 Script element added to DOM');
         
         // AGGRESSIVE continuous cleanup every 500ms to catch GA cookie creation
         setInterval(clearAllForeignCookies, 500);
-        
-        // Also run burst cleanup after script loads
-        script.onload = function() {
-          console.log('✅ GA Script loaded successfully');
-          
-          // Burst cleanup to catch immediate cookie creation
-          setTimeout(clearAllForeignCookies, 100);
-          setTimeout(clearAllForeignCookies, 500);
-          setTimeout(clearAllForeignCookies, 1000);
+      } else {
+        console.log('ℹ️ Analytics consent not granted - GA not loaded');
+      }
+    })();
+  </script>
+</head>
+<body>
     <div class="main-container">
         <h1>Technical Analysis Tool</h1>
 
