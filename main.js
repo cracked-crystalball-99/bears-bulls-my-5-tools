@@ -1,10 +1,29 @@
 // Initialize the worker
 const worker = new Worker('worker.js?v=1.61');
 
+// Loading indicator utility functions
+function showLoading() {
+    const indicator = document.getElementById('loadingIndicator');
+    if (indicator) {
+        indicator.classList.add('show');
+    }
+}
+
+function hideLoading() {
+    const indicator = document.getElementById('loadingIndicator');
+    if (indicator) {
+        indicator.classList.remove('show');
+    }
+}
+
 // Event listener for worker messages
 worker.addEventListener('message', function (e) {
     const { type, data } = e.data;
     console.log(`Received message from worker: ${type}`, data);
+    
+    // Hide loading indicator when computation completes
+    hideLoading();
+    
     if (type === 'adx') {
         populateTable2(data);
     } else if (type === 'adxtr') {
@@ -94,18 +113,21 @@ function fetchData() {
 
 // Event listeners for buttons to compute ADX, ADXTR, BB, BBTR, CCI, CCITR, MACD, CMACD, and SMACD values
 document.getElementById('computeAdxValuesButton').addEventListener('click', function () {
+    showLoading();
     const data = fetchData();
     worker.postMessage({ type: 'computeAdx', data });
     console.log('Sent data to worker for ADX computation:', data);
 });
 
 document.getElementById('computeAdxtrValuesButton').addEventListener('click', function () {
+    showLoading();
     const data = fetchData();
     worker.postMessage({ type: 'computeAdxtr', data });
     console.log('Sent data to worker for ADXTR computation:', data);
 });
 
 document.getElementById('computeBbValuesButton').addEventListener('click', function () {
+    showLoading();
     const data = fetchData();
     worker.postMessage({ type: 'computeBb', data });
     console.log('Sent data to worker for BB computation:', data);
@@ -113,18 +135,21 @@ document.getElementById('computeBbValuesButton').addEventListener('click', funct
 
 // Event Listener for Compute BBTR Button
 document.getElementById('computeBbtrValuesButton').addEventListener('click', function () {
+    showLoading();
     const data = fetchData();
     worker.postMessage({ type: 'computeBbtr', data });
     console.log('Sent data to worker for BBTR computation:', data);
 });
 
 document.getElementById('computeCciValuesButton').addEventListener('click', function () {
+    showLoading();
     const data = fetchData();
     worker.postMessage({ type: 'computeCci', data });
     console.log('Sent data to worker for CCI computation:', data);
 });
 
 document.getElementById('computeCcitrValuesButton').addEventListener('click', function () {
+    showLoading();
     const data = fetchData();
     worker.postMessage({ type: 'computeCcitr', data });
     console.log('Sent data to worker for CCITR computation:', data);
@@ -132,18 +157,21 @@ document.getElementById('computeCcitrValuesButton').addEventListener('click', fu
 
 // Event listener for MACD computation button
 document.getElementById('computeMacdValuesButton').addEventListener('click', function () {
+    showLoading();
     const data = fetchData();
     worker.postMessage({ type: 'computeMacd', data });
     console.log('Sent data to worker for MACD computation:', data);
 });
 
 document.getElementById('computeCmacdValuesButton').addEventListener('click', function () {
+    showLoading();
     const data = fetchData();
     worker.postMessage({ type: 'computeCmacd', data });
     console.log('Sent data to worker for CMACD computation:', data);
 });
 
 document.getElementById('computeSmacdValuesButton').addEventListener('click', function () {
+    showLoading();
     const data = fetchData();
     worker.postMessage({ type: 'computeSmacd', data });
     console.log('Sent data to worker for SMACD computation:', data);
