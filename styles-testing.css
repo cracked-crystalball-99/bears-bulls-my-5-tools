@@ -266,7 +266,7 @@ th {
     border-radius: 6px;
     padding: 10px;
     position: absolute;
-    z-index: 1;
+    z-index: 99999;
     bottom: 125%; /* Position the tooltip above the text */
     left: 50%;
     margin-left: -125px;
@@ -306,14 +306,16 @@ th {
         position: fixed !important;
         left: auto !important;
         right: 5% !important;
-        top: 50% !important;
+        top: 15% !important;
         bottom: auto !important;
-        transform: translateY(-50%) !important;
+        transform: none !important;
         margin-left: 0 !important;
         max-height: 70vh;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        z-index: 9999 !important;
+        z-index: 99999 !important;
+        padding: 30px 25px !important;
+        box-sizing: border-box;
     }
     
     /* Mobile/iPad tooltip enhancements */
@@ -508,7 +510,7 @@ th {
             visibility: visible !important;
             opacity: 1 !important;
             display: block !important;
-            z-index: 1000 !important;
+            z-index: 99999 !important;
             min-height: 200px !important;
             padding: 30px 20px !important;
             padding-left: 20px !important;
@@ -654,6 +656,9 @@ th {
         margin: -30px -25px 25px -25px;
         padding: 15px 25px 20px 25px;
         border-radius: 15px 15px 0 0;
+        position: sticky;
+        top: 0;
+        z-index: 10;
     }
     
     @media (max-width: 768px) {
