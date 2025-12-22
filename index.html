@@ -1316,7 +1316,7 @@
         }
       });
       
-      // Close tooltips when clicking outside
+      // Close tooltips when clicking outside or on close instruction
       document.addEventListener('click', function(e) {
         const tooltip = e.target.closest('.tooltip');
         
@@ -1326,11 +1326,26 @@
           return;
         }
         
-        // If clicking on active tooltip background (not content), close it
+        // If clicking on active tooltip, check if it's the close instruction area
         if (tooltip && tooltip.classList.contains('active')) {
           const tooltiptext = tooltip.querySelector('.tooltiptext');
-          if (tooltiptext && !tooltiptext.contains(e.target)) {
-            tooltip.classList.remove('active');
+          if (tooltiptext) {
+            // Check if click is on the tooltip content
+            if (tooltiptext.contains(e.target)) {
+              const rect = tooltiptext.getBoundingClientRect();
+              const clickY = e.clientY - rect.top;
+              
+              // If click is in the top 60px (close instruction area), close tooltip
+              if (clickY < 60) {
+                e.preventDefault();
+                e.stopPropagation();
+                tooltip.classList.remove('active');
+                return;
+              }
+            } else {
+              // Clicking outside tooltip content, close it
+              tooltip.classList.remove('active');
+            }
           }
         }
       });
