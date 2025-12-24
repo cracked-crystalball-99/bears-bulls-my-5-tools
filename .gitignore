@@ -33,3 +33,21 @@ sync-log.txt
 dev-notes.md
 todo-private.md
 testing-notes.txt
+
+# API Keys and Secrets (NEVER COMMIT THESE!)
+api-keys.txt
+*-api-key.txt
+*.key
+.env
+.env.local
+.env.production
+secrets.json
+config-local.js
+anthropic-key.txt
+openai-key.txt
+
+# Node.js
+node_modules/
+package-lock.json
+npm-debug.log*
+yarn.lock
