@@ -76,9 +76,8 @@ function initializeAITeacherUI() {
                         <label for="ai-provider">AI Provider:</label>
                         <select id="ai-provider" class="ai-select">
                             <option value="local">Local (No API Key)</option>
-                            <option value="gemini">Google Gemini (FREE) ⭐</option>
-                            <option value="openai">OpenAI (GPT)</option>
-                            <option value="anthropic">Anthropic (Claude)</option>
+                            <option value="gemini">Google Gemini (FREE) ⭐ Recommended</option>
+                            <option value="openai">OpenAI (GPT-4o-mini)</option>
                         </select>
                     </div>
                     
@@ -98,15 +97,13 @@ function initializeAITeacherUI() {
                     <div class="ai-setting-group">
                         <h4>How to get API keys:</h4>
                         <ul class="ai-help-list">
-                            <li><strong>Google Gemini (FREE):</strong> Visit <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com/app/apikey</a></li>
+                            <li><strong>Google Gemini (FREE ⭐):</strong> Visit <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com/app/apikey</a></li>
                             <li><strong>OpenAI:</strong> Visit <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a></li>
-                            <li><strong>Anthropic:</strong> Visit <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com</a></li>
                         </ul>
                         <p class="ai-help-text">
                             <strong>Cost:</strong> 
-                            <br>• Gemini 1.5 Flash: <strong>FREE</strong> (15 req/min, 1M tokens/day)
+                            <br>• <strong>Gemini 2.5 Flash: FREE</strong> (15 req/min, 1.5M tokens/day) - Recommended!
                             <br>• OpenAI GPT-4o-mini: ~$0.15 per 1M tokens (~2000 questions)
-                            <br>• Claude Haiku: ~$0.25 per 1M input tokens (~2000 questions)
                         </p>
                     </div>
                     

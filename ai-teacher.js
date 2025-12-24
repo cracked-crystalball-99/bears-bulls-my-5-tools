@@ -8,8 +8,8 @@ class AITradingTeacher {
         this.apiKey = null;
         this.conversationHistory = [];
         this.isInitialized = true; // Always initialized for local mode
-        this.provider = 'local'; // Default to 'local' - 'openai', 'anthropic', 'gemini', or 'local'
-        this.proxyUrl = 'http://localhost:3001/api/chat'; // Proxy server URL
+        this.provider = 'local'; // Default to 'local' - 'openai', 'gemini', or 'local'
+        this.proxyUrl = 'http://localhost:3001/api/chat'; // Proxy server URL (not used anymore)
         
         // Trading context knowledge base
         this.knowledgeBase = {
@@ -113,8 +113,8 @@ Keep responses concise and educational. Use examples when helpful.`;
      */
     async ask(userMessage, context = {}) {
         // Always allow local mode to work
-        // Only require API key for OpenAI/Anthropic/Gemini providers
-        if ((this.provider === 'openai' || this.provider === 'anthropic' || this.provider === 'gemini') && !this.apiKey) {
+        // Only require API key for OpenAI/Gemini providers
+        if ((this.provider === 'openai' || this.provider === 'gemini') && !this.apiKey) {
             return await this.askLocal(userMessage);
         }
 
@@ -138,8 +138,6 @@ Keep responses concise and educational. Use examples when helpful.`;
             
             if (this.provider === 'openai' && this.apiKey) {
                 response = await this.askOpenAI();
-            } else if (this.provider === 'anthropic' && this.apiKey) {
-                response = await this.askAnthropic();
             } else if (this.provider === 'gemini' && this.apiKey) {
                 response = await this.askGemini();
             } else {
@@ -192,42 +190,6 @@ Keep responses concise and educational. Use examples when helpful.`;
 
         const data = await response.json();
         return data.choices[0].message.content;
-    }
-
-    /**
-     * Query Anthropic Claude API (via proxy to avoid CORS)
-     */
-    async askAnthropic() {
-        try {
-            const response = await fetch(this.proxyUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-api-key': this.apiKey // Pass key to proxy
-                },
-                body: JSON.stringify({
-                    system: this.getSystemPrompt(),
-                    messages: this.conversationHistory,
-                    max_tokens: 500
-                })
-            });
-
-            if (!response.ok) {
-                const error = await response.json().catch(() => ({}));
-                const errorMsg = error.error || `HTTP ${response.status}: ${response.statusText}`;
-                console.error('Proxy Error:', errorMsg);
-                throw new Error(`AI Server error: ${errorMsg}`);
-            }
-
-            const data = await response.json();
-            return data.content[0].text;
-        } catch (error) {
-            console.error('AI Request Failed:', error);
-            if (error.message.includes('Failed to fetch')) {
-                throw new Error('Cannot connect to AI server. Make sure the proxy server is running on http://localhost:3001');
-            }
-            throw error;
-        }
     }
 
     /**
