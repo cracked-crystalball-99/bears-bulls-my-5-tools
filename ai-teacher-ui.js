@@ -129,13 +129,44 @@ function initializeAITeacherUI() {
  * Bind all event listeners for AI teacher UI
  */
 function bindAITeacherEvents() {
+    const container = document.getElementById('ai-teacher-container');
+    const toggleBtn = document.getElementById('ai-toggle-btn');
+    const header = document.querySelector('.ai-teacher-header');
+    
     // Toggle chat window
-    document.getElementById('ai-toggle-btn').addEventListener('click', () => {
-        const container = document.getElementById('ai-teacher-container');
+    toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         container.classList.toggle('collapsed');
-        const btn = document.getElementById('ai-toggle-btn');
-        btn.textContent = container.classList.contains('collapsed') ? '+' : '−';
+        toggleBtn.textContent = container.classList.contains('collapsed') ? '+' : '−';
     });
+    
+    // Mobile: Tap header to expand (but not on buttons)
+    header.addEventListener('click', (e) => {
+        if (e.target === header || e.target.closest('.ai-header-content')) {
+            if (window.innerWidth <= 768 && container.classList.contains('collapsed')) {
+                container.classList.remove('collapsed');
+                toggleBtn.textContent = '−';
+            }
+        }
+    });
+    
+    // Mobile: Swipe down to minimize
+    let touchStartY = 0;
+    let touchEndY = 0;
+    
+    header.addEventListener('touchstart', (e) => {
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    
+    header.addEventListener('touchend', (e) => {
+        touchEndY = e.changedTouches[0].clientY;
+        const swipeDistance = touchEndY - touchStartY;
+        
+        if (swipeDistance > 50 && !container.classList.contains('collapsed')) {
+            container.classList.add('collapsed');
+            toggleBtn.textContent = '+';
+        }
+    }, { passive: true });
     
     // Settings button
     document.getElementById('ai-settings-btn').addEventListener('click', () => {
