@@ -775,10 +775,24 @@ th {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     padding: 15px;
-    z-index: 9999;
+    z-index: 10000;
     transform: translateY(100%);
     transition: transform 0.3s ease-in-out;
     box-shadow: 0 -2px 20px rgba(0,0,0,0.2);
+}
+
+/* Mobile: Show at top to avoid AI widget conflict */
+@media (max-width: 768px) {
+    .privacy-banner {
+        top: 0;
+        bottom: auto;
+        transform: translateY(-100%);
+        box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+    }
+    
+    .privacy-banner.show {
+        transform: translateY(0);
+    }
 }
 
 .privacy-banner.show {
