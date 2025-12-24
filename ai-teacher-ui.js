@@ -138,7 +138,36 @@ function bindAITeacherEvents() {
         e.stopPropagation();
         container.classList.toggle('collapsed');
         toggleBtn.textContent = container.classList.contains('collapsed') ? '+' : '−';
+        if (typeof updateMobileState === 'function') updateMobileState();
     });
+    
+    // Create backdrop for mobile tap-to-close
+    const backdrop = document.createElement('div');
+    backdrop.className = 'ai-backdrop';
+    document.body.appendChild(backdrop);
+    
+    // Function to show/hide backdrop and update state
+    function updateMobileState() {
+        if (window.innerWidth <= 768) {
+            if (container.classList.contains('collapsed')) {
+                backdrop.classList.remove('visible');
+            } else {
+                backdrop.classList.add('visible');
+            }
+        } else {
+            backdrop.classList.remove('visible');
+        }
+    }
+    
+    // Tap backdrop to close on mobile
+    backdrop.addEventListener('click', () => {
+        container.classList.add('collapsed');
+        toggleBtn.textContent = '+';
+        updateMobileState();
+    });
+    
+    // Update backdrop on resize
+    window.addEventListener('resize', updateMobileState);
     
     // Mobile: Tap header to expand (but not on buttons)
     header.addEventListener('click', (e) => {
@@ -146,6 +175,7 @@ function bindAITeacherEvents() {
             if (window.innerWidth <= 768 && container.classList.contains('collapsed')) {
                 container.classList.remove('collapsed');
                 toggleBtn.textContent = '−';
+                updateMobileState();
             }
         }
     });
@@ -162,11 +192,15 @@ function bindAITeacherEvents() {
         touchEndY = e.changedTouches[0].clientY;
         const swipeDistance = touchEndY - touchStartY;
         
-        if (swipeDistance > 50 && !container.classList.contains('collapsed')) {
+        if (swipeDistance > 100 && !container.classList.contains('collapsed') && window.innerWidth <= 768) {
             container.classList.add('collapsed');
             toggleBtn.textContent = '+';
+            updateMobileState();
         }
     }, { passive: true });
+    
+    // Initial state
+    updateMobileState();
     
     // Settings button
     document.getElementById('ai-settings-btn').addEventListener('click', () => {

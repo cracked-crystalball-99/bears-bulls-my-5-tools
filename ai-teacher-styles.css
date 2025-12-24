@@ -385,11 +385,30 @@
         bottom: 0;
         border-radius: 0;
         transition: transform 0.3s ease;
+        z-index: 9999;
     }
     
     .ai-teacher-container.collapsed {
-        transform: translateY(calc(100% - 60px));
+        transform: translateY(calc(100% - 48px));
         height: 100vh;
+        z-index: 9998;
+    }
+    
+    .ai-teacher-container.collapsed .ai-teacher-header {
+        padding: 10px 15px;
+    }
+    
+    .ai-teacher-container.collapsed .ai-icon {
+        font-size: 20px;
+    }
+    
+    .ai-teacher-container.collapsed .ai-title {
+        font-size: 14px;
+    }
+    
+    .ai-teacher-container.collapsed .ai-status {
+        font-size: 10px;
+        padding: 2px 6px;
     }
     
     .ai-teacher-header {
@@ -450,6 +469,23 @@
     
     .ai-teacher-container.collapsed #ai-toggle-btn {
         font-size: 24px;
+    }
+    
+    /* Backdrop for tap-to-close */
+    .ai-backdrop {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 9998;
+        transition: opacity 0.3s ease;
+    }
+    
+    .ai-backdrop.visible {
+        display: block;
     }
 }
 
