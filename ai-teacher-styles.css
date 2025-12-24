@@ -389,13 +389,13 @@
     }
     
     .ai-teacher-container.collapsed {
-        transform: translateY(calc(100% - 48px));
+        transform: translateY(calc(100% - 56px));
         height: 100vh;
         z-index: 9998;
     }
     
     .ai-teacher-container.collapsed .ai-teacher-header {
-        padding: 10px 15px;
+        padding: 12px 15px;
     }
     
     .ai-teacher-container.collapsed .ai-icon {
