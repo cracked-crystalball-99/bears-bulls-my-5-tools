@@ -222,8 +222,6 @@
     <!-- Date Picker -->
     <div class="date-picker">
         <div class="pre-select-buttons">
-            <button class="pre-select" data-range="1D">1D</button>
-            <button class="pre-select" data-range="5D">5D</button>
             <button class="pre-select" data-range="3M">3M</button>
             <button class="pre-select" data-range="6M">6M</button>
             <button class="pre-select" data-range="YTD">YTD</button>
@@ -953,11 +951,43 @@
     <script src="fetch-gcf.js?v=3.2"></script>
 
     <script>
-        // Set the minimum date for the date picker inputs
+        // Set the minimum date for the date picker inputs and default to 6 months
         document.addEventListener('DOMContentLoaded', function() {
             const minDate = '2015-01-01';
+            const endDate = new Date();
+            const startDate = new Date(endDate);
+            startDate.setMonth(endDate.getMonth() - 6); // Default to 6 months
+            
             document.getElementById('start-date').setAttribute('min', minDate);
             document.getElementById('end-date').setAttribute('min', minDate);
+            
+            // Set default values
+            document.getElementById('start-date').value = startDate.toISOString().split('T')[0];
+            document.getElementById('end-date').value = endDate.toISOString().split('T')[0];
+            
+            // Add validation to prevent date ranges less than 3 months
+            const startDateInput = document.getElementById('start-date');
+            const endDateInput = document.getElementById('end-date');
+            
+            function validateDateRange() {
+                const start = new Date(startDateInput.value);
+                const end = new Date(endDateInput.value);
+                
+                // Calculate difference in months
+                const monthsDiff = (end.getFullYear() - start.getFullYear()) * 12 + 
+                                  (end.getMonth() - start.getMonth());
+                
+                if (monthsDiff < 3) {
+                    alert('⚠️ Please select at least 3 months of data for meaningful MACD analysis (requires ~35 data points).');
+                    // Reset to 3 months from end date
+                    const newStart = new Date(end);
+                    newStart.setMonth(end.getMonth() - 3);
+                    startDateInput.value = newStart.toISOString().split('T')[0];
+                }
+            }
+            
+            startDateInput.addEventListener('change', validateDateRange);
+            endDateInput.addEventListener('change', validateDateRange);
         });
 
         // Handle pre-select buttons for date ranges
@@ -968,14 +998,6 @@
                 let startDate;
 
                 switch (range) {
-                    case '1D':
-                        startDate = new Date(endDate);
-                        startDate.setDate(endDate.getDate() - 1);
-                        break;
-                    case '5D':
-                        startDate = new Date(endDate);
-                        startDate.setDate(endDate.getDate() - 5);
-                        break;
                     case '3M':
                         startDate = new Date(endDate);
                         startDate.setMonth(endDate.getMonth() - 3);
