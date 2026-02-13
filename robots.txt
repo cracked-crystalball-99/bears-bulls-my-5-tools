@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://percentagesenvy.com/sitemap.xml
+Sitemap: https://cracked-crystalball-99.github.io/bears-bulls-my-5-tools/sitemap.xml
 
 # Allow crawling of main content
 Allow: /index.html
