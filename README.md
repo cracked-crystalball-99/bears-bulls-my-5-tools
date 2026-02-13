@@ -1,4 +1,4 @@
-# 0. bears-bulls-my-5-tools
+# Trading Analysis Tool
 
 I have created a web app tool for simplifying typical technical analysis. Typically,
 traders do technical analysis by relying on visual charts and lines. 
