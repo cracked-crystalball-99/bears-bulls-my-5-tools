@@ -1,3 +1,5 @@
+tmpclaude-*
+
 # Development scripts (local only - privacy protection)
 sync-to-localhost.ps1
 sync-to-xampp.ps1
